@@ -1,0 +1,6 @@
+stop_id,stop_name,sequence,base_boarding
+S01,North Station,1,8
+S02,Market Street,2,14
+S03,Central Hospital,3,22
+S04,University Gate,4,18
+S05,Civic Center,5,10

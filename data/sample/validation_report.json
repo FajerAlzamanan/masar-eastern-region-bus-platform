@@ -1,0 +1,44 @@
+{
+  "quality_score": 1.0,
+  "passing_score": 0.85,
+  "passed": true,
+  "checks": [
+    {
+      "id": "required_tables",
+      "passed": true,
+      "severity": "critical",
+      "message": "All expected tables exist."
+    },
+    {
+      "id": "valid_trip_references",
+      "passed": true,
+      "severity": "critical",
+      "message": "Every stop event references an existing trip."
+    },
+    {
+      "id": "valid_stop_references",
+      "passed": true,
+      "severity": "critical",
+      "message": "Every stop event references an existing stop."
+    },
+    {
+      "id": "non_negative_time",
+      "passed": true,
+      "severity": "critical",
+      "message": "Time, load, and delay values are not negative."
+    },
+    {
+      "id": "capacity_not_exceeded",
+      "passed": true,
+      "severity": "critical",
+      "message": "Passenger load does not exceed bus capacity."
+    },
+    {
+      "id": "ordered_stop_sequence",
+      "passed": true,
+      "severity": "critical",
+      "message": "Stop sequence increases within each trip."
+    }
+  ],
+  "failed_checks": []
+}

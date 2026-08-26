@@ -1,0 +1,29 @@
+{
+  "roles": [
+    {
+      "role": "operations_manager",
+      "label": "Operations Manager",
+      "needs": "A concise recommendation with evidence, confidence, limitations, and next step.",
+      "permissions": ["view_dashboard", "run_scenario", "approve_recommendation"]
+    },
+    {
+      "role": "transport_planner",
+      "label": "Transport Planner",
+      "needs": "Stop and trip details, scenario comparison, and route performance patterns.",
+      "permissions": ["view_dashboard", "run_scenario", "view_explorer"]
+    },
+    {
+      "role": "data_analyst",
+      "label": "Data Analyst",
+      "needs": "Data model, generated tables, validation report, KPI definitions, and failed rows.",
+      "permissions": ["view_data_model", "generate_data", "validate_data", "view_outputs"]
+    },
+    {
+      "role": "developer",
+      "label": "Developer",
+      "needs": "Config files, API contracts, backend functions, UI states, tests, and logs.",
+      "permissions": ["view_code", "run_tests", "inspect_api"]
+    }
+  ]
+}
+

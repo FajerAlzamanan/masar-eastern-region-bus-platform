@@ -1,0 +1,2105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bus Delay DSS - Jupyter Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#f4f7fb;--paper:#fff;--line:#d9e5ee;--text:#102033;--muted:#60758b;--blue:#087da8;--green:#08734d;--amber:#9a5514;--code-bg:#f8fafc;--code-line:#d8e4ec;}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Tajawal,Arial,sans-serif;line-height:1.8} code,pre{font-family:Consolas,"Courier New",monospace;direction:ltr;text-align:left} a{color:inherit}
+.page{max-width:1180px;margin:0 auto;padding:28px 24px 70px}
+.hero{background:linear-gradient(135deg,#fff,#eef8fc);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 12px 30px rgba(20,32,51,.08);margin-bottom:18px}
+.hero-row{display:flex;justify-content:space-between;gap:20px;align-items:flex-start} .badge{display:inline-flex;border:1px solid #c7e7f6;background:#e7f4fb;color:var(--blue);border-radius:999px;padding:6px 12px;font-weight:900;direction:ltr}
+h1{font-size:42px;margin:12px 0 10px;letter-spacing:0} .hero p{max-width:920px;color:#40536a;font-size:18px;margin:0 0 12px} .open-app{display:inline-flex;text-decoration:none;background:var(--blue);color:white;border-radius:999px;padding:11px 16px;font-weight:900;white-space:nowrap}
+.week-overview{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 10px 26px rgba(20,32,51,.07)} .section-heading span{display:inline-flex;background:#eef8fc;border:1px solid #c7e7f6;color:var(--blue);border-radius:999px;padding:5px 10px;font-weight:900} .section-heading h2{margin:10px 0 8px;font-size:25px} .section-heading p{margin:0 0 16px;color:#40536a}
+.week-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .week-card{--week:#087da8;--week-bg:#eef8fc;background:linear-gradient(180deg,var(--week-bg),#fff);border:1px solid color-mix(in srgb,var(--week) 32%,#d9e5ee);border-radius:14px;padding:15px;box-shadow:0 8px 18px rgba(20,32,51,.05)} .week-card span{display:inline-flex;background:var(--week);color:white;border-radius:999px;padding:4px 10px;font-weight:900} .week-card h3{margin:10px 0 6px;font-size:18px} .week-card p{margin:0 0 10px;color:#40536a} .week-card strong{color:var(--week)} .week-card ul{margin:6px 0 0;padding-inline-start:22px;color:#40536a}
+.week-1{--week:#087da8;--week-bg:#eef8fc} .week-2{--week:#08734d;--week-bg:#effcf6} .week-3{--week:#9a5514;--week-bg:#fff7ed} .week-4{--week:#5b4cc4;--week-bg:#f4f2ff}
+.week-panel{--week:#087da8;--week-bg:#eef8fc;border:1px solid color-mix(in srgb,var(--week) 32%,#d9e5ee);background:linear-gradient(180deg,var(--week-bg),#fff);border-radius:14px;padding:14px;margin-bottom:16px} .week-panel header{display:flex;align-items:center;gap:12px;margin-bottom:8px} .week-number{display:grid;place-items:center;min-width:78px;background:var(--week);color:white;border-radius:999px;padding:6px 12px;font-weight:900} .week-panel header strong{display:block;color:#102033;font-size:18px} .week-panel header small{display:block;color:#60758b;direction:ltr;text-align:right} .week-panel p{margin:0 0 10px;color:#40536a} .week-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px} .week-grid article,.report-tasks{background:rgba(255,255,255,.76);border:1px solid var(--line);border-radius:12px;padding:12px} .week-grid b,.report-tasks strong{display:block;color:var(--week);font-size:16px;margin-bottom:4px} .week-grid ul,.report-tasks ul{margin:0;padding-inline-start:22px;color:#30455b} .week-grid li,.report-tasks li{margin:4px 0} .report-tasks{margin-top:10px;background:#fff}
+.toc,.deep-section{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,32,51,.06)} .toc h2,.deep-section h2{margin:0 0 10px;font-size:22px} .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px}
+.toc a{display:grid;grid-template-columns:30px 1fr;gap:9px;text-decoration:none;border:1px solid var(--line);border-radius:12px;background:#fbfdff;padding:10px;align-items:center} .toc b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e7f4fb;color:var(--blue);direction:ltr} .toc span{line-height:1.4}
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px} .concept-grid article,.kpi-grid article{background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:14px} .concept-grid code{display:inline-flex;background:#eef8fc;color:#075c7e;border-radius:999px;padding:5px 9px;font-weight:900} .concept-grid p,.kpi-grid p,.deep-section p{color:#40536a;margin:8px 0 0}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:12px} .kpi-grid h3{direction:ltr;text-align:left;margin:0 0 8px;color:#075c7e} .kpi-grid dl{margin:0;display:grid;grid-template-columns:80px 1fr;gap:5px 8px} .kpi-grid dt{font-weight:900;color:#496479} .kpi-grid dd{margin:0}
+.notebook{display:grid;gap:14px} .cell{display:grid;grid-template-columns:86px minmax(0,1fr);background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 8px 22px rgba(20,32,51,.05)} .prompt{background:#eef3f7;border-left:1px solid var(--line);padding:16px 10px;color:#52677c;font-weight:900;text-align:center;direction:ltr;font-size:13px} .cell-body{padding:20px;min-width:0}
+.markdown h1,.markdown h2,.markdown h3{margin:0 0 12px} .markdown p{margin:0 0 12px;color:#30455b} .markdown ul,.markdown ol{margin:0 0 12px;padding-inline-start:26px} .markdown li{margin:5px 0;color:#30455b} .markdown code{background:#eef8fc;color:#075c7e;border-radius:6px;padding:2px 5px}
+.part-title{display:inline-flex;background:#e7f4fb;color:#075c7e;border:1px solid #c7e7f6;border-radius:999px;padding:5px 10px;font-weight:900;margin:0 0 8px;direction:ltr} .code-part + .code-part{margin-top:14px}
+.code-block{margin:0;background:var(--code-bg);color:#0f2338;border:1px solid var(--code-line);border-radius:12px;padding:16px;overflow:auto;font-size:13px;line-height:1.68;box-shadow:inset 4px 0 0 #c7e7f6} .code-block code{white-space:pre}
+.explain,.output,.function-note,.learning-value{margin-top:14px;border-radius:12px;padding:16px;border:1px solid var(--line);background:#fbfdff} .explain{border-color:#c7e7f6;background:#f2fbff} .explain strong{color:#075c7e;font-size:18px} .explain p,.output p,.function-note p{margin:8px 0 0;color:#40536a}
+.learning-value{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:#fff;border-color:#dbe7ef} .learning-value article{background:#f8fbfd;border:1px solid var(--line);border-radius:10px;padding:12px} .learning-value strong{color:#075c7e} .learning-value p{margin:6px 0 0;color:#40536a}
+.output{background:#fff8ef;border-color:#fed7aa} .output header{display:flex;justify-content:space-between;gap:10px;align-items:center} .output header span{color:var(--amber);font-weight:900;direction:ltr;font-size:12px} .output pre{background:white;border:1px solid #fed7aa;border-radius:10px;padding:12px;overflow:auto;white-space:pre-wrap;margin:10px 0;color:#3b2f20}
+.function-note{background:#effcf6;border-color:#bdebd5} .function-note header{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;margin-bottom:8px} .function-note header span{color:var(--green);font-weight:900;direction:ltr;text-align:left;font-size:12px} .function-note h3{direction:ltr;text-align:left;margin:0;color:#075c3f;font-size:24px} .function-note header code{grid-column:2;grid-row:1 / span 2;background:white;border:1px solid #d7f3e6;border-radius:999px;padding:6px 10px;color:#244538} .function-note aside{margin-top:12px;background:white;border:1px solid #d7f3e6;border-radius:10px;padding:12px} .function-note aside strong{color:#075c3f}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;margin:10px 0} table{width:100%;border-collapse:collapse;background:#fff} th,td{padding:9px;border-bottom:1px solid var(--line);text-align:right} th{background:#edf5fa} .footer{margin-top:22px;color:var(--muted);text-align:center}
+@media(max-width:1050px){.week-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.learning-value,.week-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.page{padding:16px}.hero-row,.output header{flex-direction:column;align-items:flex-start}h1{font-size:31px}.cell{grid-template-columns:1fr}.prompt{border-left:0;border-bottom:1px solid var(--line);text-align:left}.function-note header{grid-template-columns:1fr}.function-note header code{grid-column:auto;grid-row:auto}}
+@media(max-width:620px){.week-cards{grid-template-columns:1fr}.week-panel header{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div class="hero-row">
+      <div>
+        <span class="badge">Jupyter Notebook</span>
+        <h1>Bus Delay DSS - Jupyter Notebook</h1>
+        <p>هذه الصفحة ليست شاشة Dashboard وليست اختبارا للطلاب. هي نسخة قراءة من Jupyter Notebook تشرح كيف يتحول مشروع Bus Delay DSS من فكرة إلى كود قابل للتشغيل. لذلك تم ترتيبها مثل notebook حقيقي: خلية شرح، ثم خلية كود، ثم مخرج متوقع، ثم شرح معنى المخرج.</p><p>الهدف أن يقرأ الطالب الكود وهو يعرف لماذا يوجد كل جزء. لا يكفي أن يرى دالة باسم generate_dataset أو analyze_dataset؛ يجب أن يفهم ما الذي يدخل إليها، ما الذي يخرج منها، كيف يؤثر ذلك على Backend API، وكيف يظهر لاحقا في واجهة DSS.</p>
+      </div>
+      <a class="open-app" href="/">العودة إلى DSS</a>
+    </div>
+  </section>
+  
+    <section class="week-overview">
+      <div class="section-heading">
+        <span>خارطة التنفيذ</span>
+        <h2>كيف يقرأ الطالب هذا Jupyter Notebook خلال أربعة أسابيع؟</h2>
+        <p>كل جزء في الصفحة يحمل بطاقة أسبوعية توضّح ما يجب فهمه، ما يجب تشغيله، ما يجب اختباره، وما الذي يمكن توثيقه في التقرير النهائي.</p>
+      </div>
+      <div class="week-cards">
+        <article class="week-card week-1">
+          <span>الأسبوع 1</span>
+          <h3>التأسيس وفهم البيانات</h3>
+          <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+          <strong>مخرج التقرير</strong>
+          <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li></ul>
+        </article>
+        
+        <article class="week-card week-2">
+          <span>الأسبوع 2</span>
+          <h3>الجودة وKPIs</h3>
+          <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+          <strong>مخرج التقرير</strong>
+          <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li></ul>
+        </article>
+        
+        <article class="week-card week-3">
+          <span>الأسبوع 3</span>
+          <h3>السيناريو والتوصية</h3>
+          <p>ينتقل الطالب من وصف المشكلة إلى اختبار بدائل: ماذا يحدث لو غيرنا جزءا محددا من البيانات، وما الدليل وراء التوصية.</p>
+          <strong>مخرج التقرير</strong>
+          <ul><li>أضف جدول scenario comparison يوضح التحسن المتوقع لكل بديل.</li><li>اكتب لماذا تم اختيار البديل المقترح، وما القيود التي تمنع اعتباره قرارا نهائيا.</li></ul>
+        </article>
+        
+        <article class="week-card week-4">
+          <span>الأسبوع 4</span>
+          <h3>التكامل والتقرير النهائي</h3>
+          <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+          <strong>مخرج التقرير</strong>
+          <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li></ul>
+        </article>
+        </div>
+    </section>
+    
+  <section class="toc"><h2>محتويات Jupyter Notebook</h2><div class="toc-grid"><a href="#cell-1"><b>1</b><span>Bus Delay DSS - Jupyter Notebook</span></a><a href="#cell-2"><b>2</b><span>1. خريطة رحلة Jupyter Notebook</span></a><a href="#cell-4"><b>3</b><span>2. سياق المشروع: ما القرار الذي يخدمه النظام؟</span></a><a href="#cell-6"><b>4</b><span>3. Config: أين نضع الافتراضات؟</span></a><a href="#cell-8"><b>5</b><span>4. توليد البيانات: من قواعد إلى جداول</span></a><a href="#cell-10"><b>6</b><span>5. فحص الجداول قبل الحساب</span></a><a href="#cell-12"><b>7</b><span>6. Data model والعلاقات</span></a><a href="#cell-14"><b>8</b><span>7. Quality Gate: لماذا نوقف التحليل أحيانا؟</span></a><a href="#cell-16"><b>9</b><span>8. KPI calculation: كيف يتحول الصف إلى مؤشر؟</span></a><a href="#cell-19"><b>10</b><span>9. Scenario Lab: تجربة تغيير قبل التوصية</span></a><a href="#cell-21"><b>11</b><span>10. Recommendation logic: كيف تصبح النتيجة قابلة للمراجعة؟</span></a><a href="#cell-23"><b>12</b><span>11. Full pipeline: ترتيب التشغيل</span></a><a href="#cell-25"><b>13</b><span>12. ماذا يجب أن يفهم الطالب بعد القراءة؟</span></a><a href="#cell-27"><b>14</b><span>13. ربط Jupyter Notebook بملفات repo</span></a></div></section>
+  
+    <section class="deep-section" id="config-rules">
+      <h2>شرح قواعد التوليد وملفات config</h2>
+      <p>قبل قراءة الدوال، يحتاج الطالب أن يفهم أن كثيرا من سلوك النظام يأتي من config وليس من الواجهة. هذه القواعد هي التي تغير شكل البيانات ثم تغير نتائج التحليل.</p>
+      <div class="concept-grid"><article><code>seed</code><p>يثبت العشوائية حتى يحصل الطلاب على نفس البيانات عند إعادة التشغيل. بدون seed، يصعب مقارنة نتائج طالبين أو شرح سبب اختلاف المخرجات.</p></article><article><code>trip_count</code><p>عدد الرحلات التي ستولد. إذا كان العدد قليلا جدا، تصبح KPIs ضعيفة لأن العينة لا تكفي لدعم recommendation.</p></article><article><code>bus_capacity</code><p>سعة الحافلة المستخدمة في فحص passenger_load. هذا الحقل يدخل في quality gate وليس في الشكل البصري فقط.</p></article><article><code>stops.problem_weight</code><p>وزن المشكلة في كل محطة. محطة ذات وزن أعلى تظهر فيها احتمالات تأخير أكبر، فتتحول إلى hotspot في التحليل.</p></article><article><code>delay_causes</code><p>تعريف أسباب التأخير وقيم base_seconds وvariability. هذا يجعل السبب النصي يتحول إلى أثر رقمي.</p></article><article><code>peak_hours</code><p>الساعات التي يزيد فيها الضغط. تؤثر في load وtraffic_delay واحتمال بعض الأسباب.</p></article><article><code>on_time_threshold_sec</code><p>الحد الذي يحدد هل trip ملتزمة بالوقت. تغيير هذا الحد يغير on_time_rate مباشرة.</p></article><article><code>dwell_excess_threshold_sec</code><p>يحدد متى تصبح مدة التوقف أعلى من المتوقع. يساعد على فهم boarding problems.</p></article><article><code>high_load_ratio</code><p>نسبة تحميل عالية مقارنة بسعة الحافلة. يمكن استخدامها لاحقا لتمييز ازدحام الركاب.</p></article><article><code>passing_score</code><p>الحد الأدنى لجودة البيانات. إذا انخفض quality_score عن هذا الحد، يجب أن يحجب النظام التحليل أو يضعفه.</p></article><article><code>saving_factor</code><p>نسبة التحسن المفترضة عند تطبيق scenario. قيمة أعلى تعني أن التدخل يقلل جزءا أكبر من issue_wait_sec.</p></article><article><code>cost_factor</code><p>تبسيط تعليمي للكلفة أو صعوبة التنفيذ. يدخل في action_score حتى لا يكون القرار مبنيا على التحسن فقط.</p></article><article><code>feasibility</code><p>مدى قابلية تنفيذ السيناريو. تدخل سهل التنفيذ قد يكون أفضل كبداية حتى لو لم يكن أعلى تحسن رقمي.</p></article></div>
+    </section>
+    <section class="deep-section" id="kpi-rules">
+      <h2>شرح KPIs المستخدمة في المشروع</h2>
+      <p>كل KPI هنا له source وformula ومعنى تشغيلي. الهدف ليس حفظ الاسم، بل فهم كيف يتحول الصف في الجدول إلى رقم يظهر في Dashboard أو Recommendation.</p>
+      <div class="kpi-grid">
+        <article>
+          <h3>on_time_rate</h3>
+          <dl>
+            <dt>Source</dt><dd><code>trips.final_delay_sec</code></dd>
+            <dt>Formula</dt><dd><code>count(final_delay_sec &lt;= threshold) / count(trips)</code></dd>
+          </dl>
+          <p>يعطي صورة عامة عن موثوقية المسار. إذا كان منخفضا، فهذا لا يخبرنا أين المشكلة، لكنه يقول إن المسار يحتاج تفتيشا أعمق.</p>
+        </article>
+        
+        <article>
+          <h3>avg_final_delay_sec</h3>
+          <dl>
+            <dt>Source</dt><dd><code>trips.final_delay_sec</code></dd>
+            <dt>Formula</dt><dd><code>mean(final_delay_sec)</code></dd>
+          </dl>
+          <p>يعرض متوسط التأخير عند نهاية الرحلة. هذا مفيد لقياس أثر السيناريوهات لأن أي تحسن في المحطات يجب أن يظهر في نهاية الرحلة.</p>
+        </article>
+        
+        <article>
+          <h3>avg_dwell_time_sec</h3>
+          <dl>
+            <dt>Source</dt><dd><code>stop_events.dwell_time_sec</code></dd>
+            <dt>Formula</dt><dd><code>mean(dwell_time_sec)</code></dd>
+          </dl>
+          <p>يركز على وقت توقف الحافلة عند المحطات. إذا كان عاليا في محطة معينة فقد يشير إلى boarding أو ازدحام ركاب.</p>
+        </article>
+        
+        <article>
+          <h3>worst_stop</h3>
+          <dl>
+            <dt>Source</dt><dd><code>stop_events grouped by stop_id</code></dd>
+            <dt>Formula</dt><dd><code>highest avg_added_delay_sec</code></dd>
+          </dl>
+          <p>يحدد نقطة البداية للتحقيق. لا يعني القرار النهائي، لكنه يوجه المستخدم إلى مكان التأخير الأكبر.</p>
+        </article>
+        
+        <article>
+          <h3>cause_summary</h3>
+          <dl>
+            <dt>Source</dt><dd><code>stop_events.delay_cause</code></dd>
+            <dt>Formula</dt><dd><code>sum(added_delay_sec) by cause</code></dd>
+          </dl>
+          <p>يوضح هل المشكلة أقرب إلى boarding أو traffic أو schedule_gap. هذا يساعد على اختيار scenario مناسب.</p>
+        </article>
+        
+        <article>
+          <h3>trip_summary</h3>
+          <dl>
+            <dt>Source</dt><dd><code>trips.final_delay_sec</code></dd>
+            <dt>Formula</dt><dd><code>top delayed trips</code></dd>
+          </dl>
+          <p>يعطي أمثلة محددة يمكن فتحها في Delay Evidence بدلا من الاكتفاء بمتوسط عام.</p>
+        </article>
+        </div>
+    </section>
+    
+  <section class="notebook">
+                <article class="cell markdown" id="cell-1">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>Bus Delay DSS - Jupyter Notebook</h2><p>هذه الصفحة تشرح notebook كرحلة هندسة برمجية كاملة. المشروع ليس عن النقل فقط؛ النقل هنا هو المثال التطبيقي الذي نستخدمه لفهم كيف يبنى نظام DSS من بيانات وقواعد وتحليل وواجهة.</p><p>سيقرأ الطالب الكود على أنه pipeline: config يحدد الافتراضات، Python يحول الافتراضات إلى جداول، validation يمنع التحليل غير الآمن، analysis يحول الصفوف إلى KPIs، scenarios تختبر بدائل، وrecommendation تجمع الدليل في مخرج قابل للمراجعة.</p><p>المهم ليس حفظ الكود. المهم أن يعرف الطالب لماذا توجد كل طبقة، ماذا يحدث لو تغيرت، وأين يظهر أثرها في الواجهة أو API.</p>
+                  </div>
+                </article>
+                
+                <article class="cell markdown" id="cell-2">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>1. خريطة رحلة Jupyter Notebook</h2><p>سنقرأ notebook بترتيب التنفيذ وليس بترتيب الحفظ. كل جزء يعتمد على السابق: لا معنى لـ KPI قبل فهم شكل الصف، ولا معنى لـ recommendation قبل quality gate، ولا معنى لـ scenario قبل baseline.</p><p>إذا شعر الطالب أن الكود طويل، فليقرأه كسلسلة صغيرة: تعريف القرار، تعريف القواعد، توليد الجداول، فحص الجداول، حساب المؤشرات، تجربة السيناريوهات، ثم بناء التوصية.</p><ul><li>Project context: تحديد القرار والنطاق قبل الكود.</li><li>Config: نقل الافتراضات إلى قيم قابلة للتعديل.</li><li>Dataset generation: بناء جداول مترابطة وليست أرقاما عشوائية.</li><li>Quality gate: منع التحليل إذا كانت البيانات غير صالحة.</li><li>KPIs: تحويل الصفوف إلى إشارات تساعد الواجهة.</li><li>Scenario Lab: مقارنة baseline مع modified data.</li><li>Recommendation: إخراج قرار مشروط بالدليل والقيود.</li></ul>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-3">
+      <div class="prompt">In [3]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>from __future__ import annotations
+
+import json
+import random
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+pd.set_option(&quot;display.max_columns&quot;, 40)
+pd.set_option(&quot;display.width&quot;, 140)
+
+try:
+    display
+except NameError:
+    def display(value):
+        print(value)</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>display()</h3>
+                <code>notebooks/bus_delay_full_journey_expanded.ipynb</code>
+              </header>
+              <div><p>هذه دالة fallback صغيرة. في Jupyter توجد display عادة بشكل جاهز وتعرض DataFrames بطريقة مرئية. لكن إذا شغل الطالب الكود في Python عادي، قد لا تكون display موجودة.</p><p>بدلا من أن يفشل notebook بسبب أداة عرض فقط، يعرّف الكود نسخة بسيطة تستخدم print. هذا مثال صغير على defensive coding: نجعل تجربة التعلم تعمل في أكثر من بيئة.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>داخل Jupyter سيظهر جدول pandas بشكل منسق. خارج Jupyter سيطبع المحتوى نصيا بدلا من إيقاف التنفيذ.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تجهز بيئة العمل. وجود imports في البداية يجعل notebook self-contained: الطالب لا يحتاج أن يعرف كل ملفات Backend قبل أن يفهم الرحلة.</p><p>استخدام pandas مهم هنا لأن معظم العمل التعليمي يعتمد على DataFrames. كل جدول في المشروع، مثل routes أو stop_events، يقرأ كجدول بيانات يمكن فحصه وتجميعه وتحويله إلى JSON لاحقا.</p><p>السطر الخاص بـ display ليس زينة. في Jupyter، display يعرض الجداول بطريقة أوضح من print. أما إذا شغل الطالب الكود خارج Jupyter، فهناك fallback بسيط حتى لا يفشل التنفيذ فقط بسبب غياب display.</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Environment ready</strong><span>Expected output</span></header>
+      <pre>pandas display.max_columns = 40
+pandas display.width = 140</pre>
+      <p>تم تجهيز بيئة notebook. هذا لا ينتج قرارا، لكنه يجعل الخلايا التالية قابلة للتنفيذ والفحص.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-4">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>2. سياق المشروع: ما القرار الذي يخدمه النظام؟</h2><p>قبل كتابة أي كود يجب أن نعرف ما القرار الذي سيخدمه النظام. في هذا المثال، لا نريد فقط أن نقول إن Route B12 يتأخر. هذا وصف عام لا يساعد فريق التشغيل كثيرا.</p><p>السؤال العملي هو: ما أول تدخل تشغيلي يستحق التجربة على Route B12 بناء على الدليل؟ هل نبدأ بتنظيم الصعود في محطة محددة؟ هل نعدل الجدولة؟ هل نحتاج حافلة إضافية؟ كل خيار له أثر وتكلفة وثقة مختلفة.</p><p>لذلك يجب أن ينتج النظام أدلة قابلة للتتبع: أين يظهر التأخير؟ هل البيانات اجتازت الفحص؟ ما الوضع الحالي baseline؟ ماذا تغير عند تجربة كل scenario؟ وما حدود الثقة في التوصية؟</p><p>بهذا الشكل يصبح DSS أداة تساعد على مراجعة قرار، لا مجرد Dashboard يعرض أرقاما جميلة.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-5">
+      <div class="prompt">In [5]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>project = {
+    &quot;project_name&quot;: &quot;Bus Delay DSS&quot;,
+    &quot;route_id&quot;: &quot;B12&quot;,
+    &quot;route_name&quot;: &quot;North Station to Civic Center&quot;,
+    &quot;problem_statement&quot;: (
+        &quot;Repeated bus delays reduce reliability and public trust. The system helps decide &quot;
+        &quot;which stop, period, and intervention should be reviewed first.&quot;
+    ),
+    &quot;decision_owner&quot;: &quot;Public Transport Operations Manager&quot;,
+    &quot;decision_to_support&quot;: (
+        &quot;Select the first operational intervention to test on route B12 based on delay evidence, &quot;
+        &quot;scenario impact, confidence, and feasibility.&quot;
+    ),
+    &quot;scope&quot;: {
+        &quot;included&quot;: [
+            &quot;Synthetic training data for one bus route&quot;,
+            &quot;Stop-level and trip-level delay analysis&quot;,
+            &quot;Scenario comparison&quot;,
+            &quot;Explainable recommendation&quot;,
+        ],
+        &quot;excluded&quot;: [
+            &quot;Real passenger personal data&quot;,
+            &quot;Live AVL feed&quot;,
+            &quot;Procurement decision&quot;,
+            &quot;City-wide network optimization&quot;,
+        ],
+    },
+    &quot;assumptions&quot;: [
+        &quot;Synthetic data is used for training and must be clearly labeled.&quot;,
+        &quot;On-time threshold is defined in kpi_config.&quot;,
+        &quot;Recommendation requires a passing data-quality score.&quot;,
+    ],
+}
+
+decision_card = {
+    &quot;decision_id&quot;: &quot;DSS-B12-001&quot;,
+    &quot;decision_title&quot;: &quot;First intervention to reduce repeated delay on route B12&quot;,
+    &quot;decision_question&quot;: &quot;Which operational intervention should be tested first, and why?&quot;,
+    &quot;minimum_quality_score&quot;: 0.85,
+    &quot;minimum_trips_for_recommendation&quot;: 10,
+    &quot;evidence_required&quot;: [
+        &quot;Data quality score&quot;,
+        &quot;Worst stop ranking&quot;,
+        &quot;Baseline KPIs&quot;,
+        &quot;Scenario comparison&quot;,
+        &quot;Recommendation confidence&quot;,
+        &quot;Limitations&quot;,
+    ],
+    &quot;safe_failure_message&quot;: &quot;Recommendation is blocked until the dataset quality and evidence thresholds pass.&quot;,
+}
+
+project</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تضع project context. هذا مهم جدا لأن DSS لا يبدأ من جدول بيانات فقط؛ يبدأ من قرار يحتاج دعما. هنا القرار هو اختيار أول intervention يستحق التجربة على Route B12.</p><p>وجود scope يساعد الطلاب على عدم توسيع المشروع بلا حدود. included يحدد ما سيدعمه النموذج التعليمي، وexcluded يوضح ما لا يدعي النظام حله مثل live AVL أو قرار procurement أو تحسين الشبكة بالكامل.</p><p>الافتراضات assumptions ليست كلاما جانبيا. هي جزء من سلامة النظام: Synthetic Data يجب أن توسم بوضوح، وRecommendation لا يجب أن تظهر إلا بعد اجتياز Data Quality.</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Project context</strong><span>Expected output</span></header>
+      <pre>project_name: Bus Delay DSS
+route_id: B12
+decision_owner: Public Transport Operations Manager
+decision_to_support: Select the first operational intervention to test on route B12</pre>
+      <p>المخرج المتوقع هو dictionary يوضح القرار والنطاق والافتراضات. هذه هي نقطة البداية الصحيحة لأي DSS.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-6">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>3. Config: أين نضع الافتراضات؟</h2><p>في المشاريع الجيدة لا ندفن الافتراضات داخل الدوال. إذا كانت سعة الحافلة أو عدد الرحلات أو ساعات الذروة مكتوبة داخل function بشكل ثابت، سيصعب على الطالب أو الفريق تغيير التجربة وفهم أثر التغيير.</p><p>لذلك نستخدم config. الconfig هنا ليس ملف إعدادات شكلي؛ هو طريقة لفصل السؤال عن طريقة الحساب. عندما نغير trip_count أو peak_hours أو saving_factor نغير التجربة نفسها، بينما تبقى الدوال العامة كما هي.</p><p>هذا يعلم الطالب مبدأ مهما في تطوير البرمجيات: الكود الجيد لا يجبرك على فتح function كل مرة تريد تغيير assumption. يجعل الأشياء المتغيرة واضحة وقابلة للمراجعة.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-7">
+      <div class="prompt">In [7]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>generation_rules = {
+    &quot;seed&quot;: 42,
+    &quot;route_id&quot;: &quot;B12&quot;,
+    &quot;trip_count&quot;: 36,
+    &quot;bus_capacity&quot;: 60,
+    &quot;service_start_hour&quot;: 7,
+    &quot;headway_minutes&quot;: 15,
+    &quot;stops&quot;: [
+        {&quot;stop_id&quot;: &quot;S01&quot;, &quot;stop_name&quot;: &quot;North Station&quot;, &quot;base_boarding&quot;: 8, &quot;problem_weight&quot;: 0.1},
+        {&quot;stop_id&quot;: &quot;S02&quot;, &quot;stop_name&quot;: &quot;Market Street&quot;, &quot;base_boarding&quot;: 14, &quot;problem_weight&quot;: 0.3},
+        {&quot;stop_id&quot;: &quot;S03&quot;, &quot;stop_name&quot;: &quot;Central Hospital&quot;, &quot;base_boarding&quot;: 22, &quot;problem_weight&quot;: 0.9},
+        {&quot;stop_id&quot;: &quot;S04&quot;, &quot;stop_name&quot;: &quot;University Gate&quot;, &quot;base_boarding&quot;: 18, &quot;problem_weight&quot;: 0.5},
+        {&quot;stop_id&quot;: &quot;S05&quot;, &quot;stop_name&quot;: &quot;Civic Center&quot;, &quot;base_boarding&quot;: 10, &quot;problem_weight&quot;: 0.2},
+    ],
+    &quot;delay_causes&quot;: {
+        &quot;boarding&quot;: {&quot;base_seconds&quot;: 35, &quot;variability&quot;: 25},
+        &quot;traffic&quot;: {&quot;base_seconds&quot;: 45, &quot;variability&quot;: 35},
+        &quot;schedule_gap&quot;: {&quot;base_seconds&quot;: 25, &quot;variability&quot;: 20},
+    },
+    &quot;peak_hours&quot;: [7, 8, 16, 17],
+    &quot;synthetic_notice&quot;: &quot;Training dataset. Not real passenger or live operations data.&quot;,
+}
+
+kpi_config = {
+    &quot;on_time_threshold_sec&quot;: 300,
+    &quot;dwell_excess_threshold_sec&quot;: 45,
+    &quot;high_load_ratio&quot;: 0.85,
+}
+
+validation_rules = {&quot;passing_score&quot;: 0.85}
+
+scenarios_config = {
+    &quot;scenarios&quot;: [
+        {&quot;scenario_id&quot;: &quot;SC01&quot;, &quot;name&quot;: &quot;Organized Boarding&quot;, &quot;target_stop_id&quot;: &quot;S03&quot;, &quot;description&quot;: &quot;Staff organize boarding at the most delayed stop.&quot;, &quot;saving_factor&quot;: 0.55, &quot;cost_factor&quot;: 1.2, &quot;feasibility&quot;: 0.9},
+        {&quot;scenario_id&quot;: &quot;SC02&quot;, &quot;name&quot;: &quot;Ticket Machine&quot;, &quot;target_stop_id&quot;: &quot;S03&quot;, &quot;description&quot;: &quot;Add ticket machine to reduce boarding delay.&quot;, &quot;saving_factor&quot;: 0.45, &quot;cost_factor&quot;: 1.8, &quot;feasibility&quot;: 0.7},
+        {&quot;scenario_id&quot;: &quot;SC03&quot;, &quot;name&quot;: &quot;Additional Bus&quot;, &quot;target_stop_id&quot;: &quot;S03&quot;, &quot;description&quot;: &quot;Add an extra bus during peak periods.&quot;, &quot;saving_factor&quot;: 0.65, &quot;cost_factor&quot;: 2.6, &quot;feasibility&quot;: 0.55},
+        {&quot;scenario_id&quot;: &quot;SC04&quot;, &quot;name&quot;: &quot;Schedule Adjustment&quot;, &quot;target_stop_id&quot;: &quot;S02&quot;, &quot;description&quot;: &quot;Adjust headway before the busiest segment.&quot;, &quot;saving_factor&quot;: 0.35, &quot;cost_factor&quot;: 1.0, &quot;feasibility&quot;: 0.8},
+    ]
+}</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تعلم الطالب كيف يفصل بين منطق البرنامج وبين الافتراضات القابلة للتغيير. في مشروع حقيقي، لا نريد أن يفتح المطور دالة التحليل كل مرة يريد تغيير عدد الرحلات أو حد الالتزام بالوقت أو شدة المشكلة في محطة معينة.</p><p>generation_rules هو وصف للعالم التجريبي الذي سنبني عليه البيانات. seed يجعل النتائج قابلة للتكرار. trip_count يحدد حجم العينة. bus_capacity يدخل في فحص الجودة. stops لا تعني أسماء محطات فقط؛ كل stop يحمل base_boarding وproblem_weight، أي أن المحطة نفسها لها سلوك متوقع ومخاطر مختلفة.</p><p>delay_causes يشرح كيف تتحول الأسباب إلى أثر رقمي. boarding وtraffic وschedule_gap ليست labels للعرض فقط؛ لكل سبب base_seconds وvariability. هذا يعني أن سبب التأخير سيؤثر على dwell_time_sec وadded_delay_sec، ثم سيظهر لاحقا في cause_summary.</p><p>kpi_config يحدد معنى المؤشر قبل حسابه. on_time_threshold_sec مثلا يقرر متى نعتبر الرحلة ملتزمة بالوقت. إذا تغير threshold من 300 إلى 180 ثانية، ستتغير on_time_rate حتى لو بقيت البيانات نفسها. هذا درس مهم: بعض النتائج تتغير بسبب تعريف المؤشر وليس بسبب تغير الواقع.</p><p>scenarios_config يحول فكرة التدخل إلى قيم قابلة للحساب. target_stop_id يحدد الصفوف المتأثرة، saving_factor يحدد مقدار التحسن المفترض، cost_factor يمثل تكلفة أو صعوبة التدخل، وfeasibility يمثل سهولة التنفيذ. هذه القيم ستدخل لاحقا في action_score، لذلك يجب قراءتها كجزء من منطق القرار لا كإعدادات شكلية.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن config هو عقد تعليمي وتشغيلي. إذا أردنا تجربة عالم مختلف، نغير القواعد لا نعيد كتابة الدالة.</p></article><article><strong>مثال</strong><p>رفع trip_count يزيد حجم العينة. رفع problem_weight في S03 يجعل المحطة تظهر كمشكلة أكبر. تغيير saving_factor يجعل scenario أكثر أو أقل تفاؤلا.</p></article><article><strong>خطأ شائع</strong><p>اعتبار config مجرد أرقام. في الحقيقة كل قيمة هنا ستتحول إلى صفوف ثم KPIs ثم recommendation.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Config loaded</strong><span>Expected output</span></header>
+      <pre>trip_count: 36
+bus_capacity: 60
+problem stop: S03 Central Hospital
+on_time_threshold_sec: 300
+passing_score: 0.85
+scenarios: Organized Boarding, Ticket Machine, Additional Bus, Schedule Adjustment</pre>
+      <p>هذه القيم ستؤثر في كل شيء لاحقا: شكل البيانات، معنى on-time، الفحوص، والسيناريوهات.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-8">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>4. توليد البيانات: من قواعد إلى جداول</h2><p>هذه المرحلة تحول config إلى dataset. لا نريد أرقاما مبعثرة، بل جداول لها علاقات واضحة. هذا هو الفرق بين demo ضعيف وDSS يمكن شرحه.</p><p>routes يصف المسار. stops يصف المحطات وترتيبها. trips يصف الرحلات. stop_events يصف وصول كل رحلة إلى كل محطة. هذا الجدول الأخير هو الأغنى لأنه يحمل الحمل، مدة الوقوف، سبب التأخير، والتأخير المتراكم.</p><p>إذا فهم الطالب stop_events، سيفهم معظم النظام. كل Dashboard أو Explorer أو Scenario لاحقا يعود في النهاية إلى صفوف من هذا الجدول.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-9">
+      <div class="prompt">In [9]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def generate_dataset(rules: dict[str, Any]) -&gt; dict[str, pd.DataFrame]:
+    &quot;&quot;&quot;Generate a reproducible synthetic bus-route dataset.&quot;&quot;&quot;
+    rng = random.Random(rules[&quot;seed&quot;])
+    stops_config = rules[&quot;stops&quot;]
+    route_id = rules[&quot;route_id&quot;]
+    bus_capacity = rules[&quot;bus_capacity&quot;]
+    start_time = datetime(2026, 8, 3, rules[&quot;service_start_hour&quot;], 0)
+
+    routes = pd.DataFrame([{
+        &quot;route_id&quot;: route_id,
+        &quot;route_name&quot;: &quot;North Station to Civic Center&quot;,
+        &quot;bus_capacity&quot;: bus_capacity,
+        &quot;synthetic&quot;: True,
+    }])
+
+    stops = pd.DataFrame([
+        {
+            &quot;stop_id&quot;: stop[&quot;stop_id&quot;],
+            &quot;route_id&quot;: route_id,
+            &quot;stop_name&quot;: stop[&quot;stop_name&quot;],
+            &quot;sequence&quot;: index + 1,
+            &quot;base_boarding&quot;: stop[&quot;base_boarding&quot;],
+        }
+        for index, stop in enumerate(stops_config)
+    ])
+
+    trips_rows = []
+    event_rows = []
+
+    for trip_index in range(rules[&quot;trip_count&quot;]):
+        departure = start_time + timedelta(minutes=trip_index * rules[&quot;headway_minutes&quot;])
+        is_peak = departure.hour in rules[&quot;peak_hours&quot;]
+        trip_id = f&quot;T{trip_index + 1:03d}&quot;
+        cumulative_delay = 0
+        passenger_load = 0
+
+        for stop_index, stop in enumerate(stops_config):
+            cause = choose_delay_cause(rng, stop[&quot;problem_weight&quot;], is_peak)
+            boarding = max(0, int(rng.gauss(stop[&quot;base_boarding&quot;] * (1.35 if is_peak else 1.0), 4)))
+            alighting = max(0, int(rng.gauss(4 + stop_index, 2)))
+            passenger_load = min(bus_capacity, max(0, passenger_load + boarding - alighting))
+
+            expected_dwell = 25 + boarding * 1.4
+            issue_wait = cause_delay_seconds(rng, rules[&quot;delay_causes&quot;][cause], stop[&quot;problem_weight&quot;], is_peak)
+            dwell_time = int(expected_dwell + issue_wait)
+            traffic_delay = int(max(0, rng.gauss(35 if is_peak else 15, 12)))
+            added_delay = issue_wait + traffic_delay
+            cumulative_delay += int(added_delay)
+
+            event_rows.append({
+                &quot;trip_id&quot;: trip_id,
+                &quot;route_id&quot;: route_id,
+                &quot;stop_id&quot;: stop[&quot;stop_id&quot;],
+                &quot;stop_name&quot;: stop[&quot;stop_name&quot;],
+                &quot;sequence&quot;: stop_index + 1,
+                &quot;scheduled_arrival_min&quot;: stop_index * 6,
+                &quot;actual_arrival_min&quot;: stop_index * 6 + round(cumulative_delay / 60, 1),
+                &quot;passengers_boarding&quot;: boarding,
+                &quot;passengers_alighting&quot;: alighting,
+                &quot;passenger_load&quot;: passenger_load,
+                &quot;bus_capacity&quot;: bus_capacity,
+                &quot;expected_dwell_sec&quot;: round(expected_dwell, 1),
+                &quot;dwell_time_sec&quot;: dwell_time,
+                &quot;dwell_excess_sec&quot;: round(max(0, dwell_time - expected_dwell), 1),
+                &quot;issue_wait_sec&quot;: int(issue_wait),
+                &quot;traffic_delay_sec&quot;: traffic_delay,
+                &quot;added_delay_sec&quot;: int(added_delay),
+                &quot;cumulative_delay_sec&quot;: cumulative_delay,
+                &quot;delay_cause&quot;: cause,
+                &quot;is_peak&quot;: is_peak,
+            })
+
+        trips_rows.append({
+            &quot;trip_id&quot;: trip_id,
+            &quot;route_id&quot;: route_id,
+            &quot;departure_time&quot;: departure.isoformat(timespec=&quot;minutes&quot;),
+            &quot;is_peak&quot;: is_peak,
+            &quot;final_delay_sec&quot;: cumulative_delay,
+        })
+
+    return {
+        &quot;routes&quot;: routes,
+        &quot;stops&quot;: stops,
+        &quot;trips&quot;: pd.DataFrame(trips_rows),
+        &quot;stop_events&quot;: pd.DataFrame(event_rows),
+    }</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>generate_dataset()</h3>
+                <code>backend/generator.py</code>
+              </header>
+              <div><p>هذه الدالة هي مصنع البيانات في المشروع. هي لا تنشئ جدولا واحدا فقط، بل تنشئ أربعة جداول لها علاقة واضحة ببعضها. هذا يعلّم الطالب أن التطبيق الذكي لا يبدأ من chart؛ يبدأ من data model يمكن تتبعه.</p><p>المدخل الأساسي هو rules. هذا يعني أن سلوك الدالة قابل للتعديل من config: عدد الرحلات، المحطات، وزن المشكلة في كل محطة، ساعات الذروة، وسعة الحافلة. عندما يعدل الطالب config فهو يغير العالم الافتراضي الذي يختبره النظام.</p><p>المخرج هو dictionary يحتوي DataFrames. هذا مناسب تعليميا لأن الطالب يرى كل جدول منفصلا، ومناسب برمجيا لأن Backend يستطيع تمرير نفس الجداول إلى validation وanalysis وscenarios.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>إذا زاد problem_weight في S03، ستختار الدالة أسباب تأخير أكبر في هذه المحطة، ثم يظهر ذلك لاحقا في worst_stop وstop_summary.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 2</div>
+              <pre class="code-block"><code>def choose_delay_cause(rng: random.Random, problem_weight: float, is_peak: bool) -&gt; str:
+    boarding_probability = min(0.75, 0.25 + problem_weight * 0.45 + (0.15 if is_peak else 0))
+    roll = rng.random()
+    if roll &lt; boarding_probability:
+        return &quot;boarding&quot;
+    if roll &lt; boarding_probability + 0.18:
+        return &quot;traffic&quot;
+    return &quot;schedule_gap&quot;</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>choose_delay_cause()</h3>
+                <code>backend/generator.py</code>
+              </header>
+              <div><p>هذه الدالة الصغيرة تمنع البيانات من أن تكون random بلا معنى. هي تستخدم problem_weight وis_peak لزيادة احتمال أسباب معينة.</p><p>في ساعة الذروة، traffic يصبح أكثر احتمالا. في محطة ذات problem_weight مرتفع، boarding يصبح أكثر حضورا. هذا يجعل البيانات synthetic لكنها ليست عبثية.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>Central Hospital لها problem_weight أعلى، لذلك يظهر boarding أكثر، وهذا يجعل Organized Boarding سيناريو منطقيا للاختبار.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 3</div>
+              <pre class="code-block"><code>def cause_delay_seconds(rng: random.Random, cause_config: dict[str, float], problem_weight: float, is_peak: bool) -&gt; int:
+    base = cause_config[&quot;base_seconds&quot;]
+    variability = cause_config[&quot;variability&quot;]
+    peak_factor = 1.35 if is_peak else 1.0
+    return max(0, int(rng.gauss(base * problem_weight * peak_factor, variability)))
+
+
+dataset = generate_dataset(generation_rules)
+{name: frame.shape for name, frame in dataset.items()}</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>cause_delay_seconds()</h3>
+                <code>backend/generator.py</code>
+              </header>
+              <div><p>بعد اختيار السبب، يجب تحويله إلى أثر رقمي. هذه الدالة تستخدم base_seconds وvariability ثم تضيف ضغط المشكلة وساعة الذروة.</p><p>هذا الربط مهم: السبب النصي delay_cause وحده لا يكفي. DSS يحتاج رقما يمكن جمعه ومقارنته وتحويله إلى KPI.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>traffic في peak hour يعطي عادة added_delay أعلى من schedule_gap خارج الذروة.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تولد data model كامل. ليس المقصود إنتاج أرقام كثيرة، بل إنتاج جداول مترابطة يمكن أن تشبه بنية نظام DSS حقيقي.</p><p>routes يمثل تعريف المسار وسعة الحافلة. stops يمثل المحطات بالترتيب. trips يمثل الرحلات المجدولة. stop_events هو أهم جدول لأنه يربط trip مع stop ويضع عليه load وdwell وdelay cause وcumulative delay.</p><p>داخل الحلقة، كل trip تمر على كل stop. هذا يجيب عن سؤال ماذا يمثّل الصف الواحد؟ الصف في stop_events يعني حافلة وصلت إلى محطة معينة أثناء رحلة معينة. إذا ضاع هذا المعنى، تصبح كل الرسومات والتحليلات لاحقا غير مفهومة.</p><p>الدوال الصغيرة choose_delay_cause وcause_delay_seconds تجعل منطق التأخير قابل للفهم. المشكلة ليست random فقط؛ المشكلة تتأثر بـ problem_weight وبوقت الذروة is_peak وبنوع السبب.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن توليد البيانات ليس random rows. التوليد الجيد يحافظ على العلاقات: كل trip لها stop_events، وكل stop_event له trip_id وstop_id يمكن تتبعهما.</p></article><article><strong>مثال</strong><p>إذا كانت T001 تمر على خمس محطات، يجب أن تظهر خمس rows في stop_events لهذه الرحلة. عند آخر محطة يظهر cumulative_delay_sec الذي يصبح final_delay_sec في trips.</p></article><article><strong>خطأ شائع</strong><p>حساب التأخير مباشرة في trips ونسيان stop_events. هذا يمنع الطالب من معرفة أين حدث التأخير ولماذا.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Generated dataset</strong><span>Expected output</span></header>
+      <pre>routes: 1 row
+stops: 5 rows
+trips: 36 rows
+stop_events: 180 rows</pre>
+      <p>النتيجة هي data model مصغر. أهم نقطة: stop_events يحتوي الصفوف التي ستشرح التأخير لاحقا.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-10">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>5. فحص الجداول قبل الحساب</h2><p>قبل بناء أي KPI يجب فتح الجداول. هذه خطوة بسيطة لكنها تمنع أخطاء كبيرة. الطالب يجب أن يسأل: ماذا يمثل الصف الواحد؟ هل هذا جدول رحلات أم جدول أحداث داخل الرحلة؟</p><p>عند رؤية stop_events مثلا، يجب أن يلاحظ أن trip_id يتكرر لأن الرحلة تمر على عدة محطات، وأن stop_id يتكرر لأن المحطة تظهر في رحلات متعددة. هذا التكرار ليس خطأ؛ هو نتيجة مباشرة لسؤال: ماذا يمثّل الصف الواحد؟</p><p>إذا لم يفهم الطالب ماذا يمثّل الصف الواحد؟ سيخلط بين عدد الرحلات وعدد أحداث المحطات، وقد يحسب KPI يبدو صحيحا لكنه مبني على مستوى صف خاطئ.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-11">
+      <div class="prompt">In [11]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>print(&quot;routes&quot;)
+display(dataset[&quot;routes&quot;])
+
+print(&quot;stops&quot;)
+display(dataset[&quot;stops&quot;])
+
+print(&quot;trips sample&quot;)
+display(dataset[&quot;trips&quot;].head(8))
+
+print(&quot;stop_events sample&quot;)
+display(dataset[&quot;stop_events&quot;].head(12))</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية لا تحسب شيئا جديدا، لكنها من أهم الخلايا تعليميا. قبل أي KPI يجب فتح الجداول ومشاهدة شكل الصفوف.</p><p>عندما يرى الطالب routes وstops وtrips وstop_events، يبدأ بفهم الفرق بين table-level summary وrow-level evidence. Dashboard لاحقا يلخص، لكن الدليل الحقيقي موجود في الصفوف.</p><p>هذه المعاينة تساعد الطالب على كشف أخطاء مبكرة: هل stop_id واضح؟ هل trip_id متكرر بطريقة منطقية؟ هل added_delay_sec موجود؟ هل delay_cause مفهوم؟</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Table preview</strong><span>Expected output</span></header>
+      <pre>routes
+B12 | North Station to Civic Center | capacity 60
+
+stops
+S01 North Station
+S02 Market Street
+S03 Central Hospital
+S04 University Gate
+S05 Civic Center
+
+stop_events sample
+T001 | S03 | passenger_load 48 | added_delay_sec 104 | delay_cause boarding</pre>
+      <p>المعاينة المتوقعة تجعل الطالب يرى الفرق بين route وtrip وstop_event قبل حساب أي رقم.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-12">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>6. Data model والعلاقات</h2><p>Data model يشرح كيف تتصل الجداول. العلاقات هنا ليست رسما نظريا؛ هي التي تسمح للواجهة أن تفتح trip ثم ترى محطاته، أو تفتح stop ثم ترى الرحلات التي مرت عليه.</p><p>العلاقة routes to trips تعني أن المسار يحتوي رحلات. العلاقة routes to stops تعني أن المسار يحتوي محطات. أما stop_events فهو نقطة الالتقاء بين trips وstops.</p><p>هذا يشرح لماذا نحتاج foreign keys. إذا كان stop_event يشير إلى trip غير موجودة، فلن يستطيع النظام شرح التأخير. وإذا كان يشير إلى stop غير موجودة، فلن نستطيع تحديد موقع المشكلة.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-13">
+      <div class="prompt">In [13]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-1">
+      <header>
+        <span class="week-number">الأسبوع 1</span>
+        <div>
+          <strong>التأسيس وفهم البيانات</strong>
+          <small>Week 1 - Data foundation</small>
+        </div>
+      </header>
+      <p>يبني الطالب الصورة الأولى: ما القرار الذي يخدمه النظام، ما شكل البيانات، وما معنى سؤال: ماذا يمثّل الصف الواحد؟</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>معنى decision scope ولماذا لا يبدأ DSS من الرسم أو الواجهة فقط.</li><li>معنى ماذا يمثّل الصف الواحد؟ في routes وstops وtrips وstop_events، ولماذا يختلف صف الرحلة عن صف توقف الحافلة.</li><li>كيف تتحول config إلى قواعد توليد بيانات يمكن تعديلها وفحص أثرها.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل خلايا project context وconfig وgenerate_dataset بالترتيب.</li><li>فتح عينات الجداول ومراجعة المفاتيح والحقول قبل بناء أي KPI.</li><li>مطابقة stop_events مع trips وstops حتى يرى الطالب العلاقة بين الصفوف.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد من عدد الجداول والصفوف المتوقع بعد التوليد.</li><li>تغيير قيمة صغيرة في config وملاحظة أثرها على البيانات الناتجة.</li><li>التأكد أن كل stop_event يشير إلى trip وstop موجودين.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب فقرة عن القرار التشغيلي الذي يخدمه النظام والنطاق الذي لا يغطيه النموذج.</li><li>أضف Screenshot أو table preview يوضح شكل الجداول الأساسية.</li><li>اشرح ماذا يمثّل الصف الواحد؟ في جدول stop_events بمثال صف واحد: رحلة، محطة، تحميل ركاب، وdelay.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>data_model = pd.DataFrame([
+    {&quot;table&quot;: &quot;routes&quot;, &quot;grain&quot;: &quot;one bus route&quot;, &quot;primary_key&quot;: &quot;route_id&quot;, &quot;important_fields&quot;: &quot;route_id, route_name, bus_capacity&quot;},
+    {&quot;table&quot;: &quot;stops&quot;, &quot;grain&quot;: &quot;one stop on the route&quot;, &quot;primary_key&quot;: &quot;stop_id&quot;, &quot;important_fields&quot;: &quot;stop_id, route_id, sequence, base_boarding&quot;},
+    {&quot;table&quot;: &quot;trips&quot;, &quot;grain&quot;: &quot;one bus trip&quot;, &quot;primary_key&quot;: &quot;trip_id&quot;, &quot;important_fields&quot;: &quot;trip_id, route_id, departure_time, final_delay_sec&quot;},
+    {&quot;table&quot;: &quot;stop_events&quot;, &quot;grain&quot;: &quot;one trip reaching one stop&quot;, &quot;primary_key&quot;: &quot;trip_id + stop_id&quot;, &quot;important_fields&quot;: &quot;trip_id, stop_id, passenger_load, added_delay_sec, delay_cause&quot;},
+])
+
+data_model</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تحول العلاقات إلى جدول تعليمي. الطالب يحتاج أن يرى schema قبل أن يرى ERD أو API response.</p><p>الفكرة الأساسية: routes يرتبط بـ trips وstops، ثم trips وstops يلتقيان داخل stop_events. لذلك stop_events ليس جدول إضافي عشوائي؛ هو جدول الأحداث الذي يسمح بتحليل التأخير على مستوى المحطة والرحلة.</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Data model summary</strong><span>Expected output</span></header>
+      <pre>routes(route_id) -&gt; trips(route_id)
+routes(route_id) -&gt; stops(route_id)
+trips(trip_id) -&gt; stop_events(trip_id)
+stops(stop_id) -&gt; stop_events(stop_id)</pre>
+      <p>هذا المخرج يختصر العلاقات والمفاتيح، ويمهد لفهم ERD وصفحة Data Model.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-14">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-2">
+      <header>
+        <span class="week-number">الأسبوع 2</span>
+        <div>
+          <strong>الجودة وKPIs</strong>
+          <small>Week 2 - Quality and metrics</small>
+        </div>
+      </header>
+      <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>Quality Gate يعني أن النظام قد يمنع التحليل إذا كانت البيانات غير صالحة.</li><li>الفرق بين critical issue وwarning، ولماذا لا تتساوى كل مشاكل البيانات.</li><li>KPI الجيد له source table وfields وformula وthreshold وليس مجرد رقم في بطاقة.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل validate_dataset وقراءة passed وquality_score وfailed_checks.</li><li>تشغيل analyze_dataset ومراجعة stop_summary وcause_summary وworst_trips.</li><li>تتبع كل KPI من الواجهة إلى الحقول التي خرج منها في الجداول.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تجربة حالة مرجعية مكسورة أو قيمة سالبة ومعرفة هل يتم إيقاف التحليل.</li><li>مقارنة passed/failed counts قبل قبول النتائج.</li><li>التأكد أن worst_stop لا يأتي من trips فقط بل من stop_events.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li><li>أرفق لقطة أو مخرج يثبت أن التحليل مبني على بيانات اجتازت الفحص.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>7. Quality Gate: لماذا نوقف التحليل أحيانا؟</h2><p>Quality Gate ليس رسالة نجاح أو فشل فقط. هو قرار برمجي: هل يسمح النظام للبيانات أن تتحول إلى تحليل وتوصية؟</p><p>في DSS، الخطأ الخطير ليس فقط أن يفشل الكود. الخطأ الأخطر أن ينجح الكود ويعرض recommendation مبنية على بيانات مكسورة. لذلك validation جزء من أخلاقيات النظام وليس خطوة تقنية جانبية.</p><p>الفحوص هنا تعلم الطالب أن البيانات لها شروط: الجداول يجب أن توجد، العلاقات يجب أن تكون صحيحة، القيم لا يجب أن تكون سالبة، وتسلسل المحطات يجب أن يكون منطقيا.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-15">
+      <div class="prompt">In [15]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-2">
+      <header>
+        <span class="week-number">الأسبوع 2</span>
+        <div>
+          <strong>الجودة وKPIs</strong>
+          <small>Week 2 - Quality and metrics</small>
+        </div>
+      </header>
+      <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>Quality Gate يعني أن النظام قد يمنع التحليل إذا كانت البيانات غير صالحة.</li><li>الفرق بين critical issue وwarning، ولماذا لا تتساوى كل مشاكل البيانات.</li><li>KPI الجيد له source table وfields وformula وthreshold وليس مجرد رقم في بطاقة.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل validate_dataset وقراءة passed وquality_score وfailed_checks.</li><li>تشغيل analyze_dataset ومراجعة stop_summary وcause_summary وworst_trips.</li><li>تتبع كل KPI من الواجهة إلى الحقول التي خرج منها في الجداول.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تجربة حالة مرجعية مكسورة أو قيمة سالبة ومعرفة هل يتم إيقاف التحليل.</li><li>مقارنة passed/failed counts قبل قبول النتائج.</li><li>التأكد أن worst_stop لا يأتي من trips فقط بل من stop_events.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li><li>أرفق لقطة أو مخرج يثبت أن التحليل مبني على بيانات اجتازت الفحص.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def validate_dataset(dataset: dict[str, pd.DataFrame], rules: dict[str, Any]) -&gt; dict[str, Any]:
+    checks = []
+    expected_tables = {&quot;routes&quot;, &quot;stops&quot;, &quot;trips&quot;, &quot;stop_events&quot;}
+    checks.append(check(&quot;required_tables&quot;, expected_tables.issubset(dataset.keys()), &quot;All expected tables exist.&quot;))
+
+    events = dataset.get(&quot;stop_events&quot;, pd.DataFrame())
+    trips = dataset.get(&quot;trips&quot;, pd.DataFrame())
+    stops = dataset.get(&quot;stops&quot;, pd.DataFrame())
+
+    checks.append(check(&quot;valid_trip_references&quot;, events.empty or events[&quot;trip_id&quot;].isin(set(trips[&quot;trip_id&quot;])).all(), &quot;Every stop event references an existing trip.&quot;))
+    checks.append(check(&quot;valid_stop_references&quot;, events.empty or events[&quot;stop_id&quot;].isin(set(stops[&quot;stop_id&quot;])).all(), &quot;Every stop event references an existing stop.&quot;))
+
+    numeric_cols = [&quot;dwell_time_sec&quot;, &quot;added_delay_sec&quot;, &quot;cumulative_delay_sec&quot;, &quot;passenger_load&quot;]
+    non_negative = all((events[col] &gt;= 0).all() for col in numeric_cols if col in events)
+    checks.append(check(&quot;non_negative_time&quot;, non_negative, &quot;Time, load, and delay values are not negative.&quot;))
+
+    capacity_ok = events.empty or (events[&quot;passenger_load&quot;] &lt;= events[&quot;bus_capacity&quot;]).all()
+    checks.append(check(&quot;capacity_not_exceeded&quot;, capacity_ok, &quot;Passenger load does not exceed bus capacity.&quot;, severity=&quot;warning&quot;))
+
+    ordered = True
+    if not events.empty:
+        for _, group in events.sort_values([&quot;trip_id&quot;, &quot;sequence&quot;]).groupby(&quot;trip_id&quot;):
+            if not group[&quot;sequence&quot;].is_monotonic_increasing:
+                ordered = False
+                break
+    checks.append(check(&quot;ordered_stop_sequence&quot;, ordered, &quot;Stop sequence increases within each trip.&quot;))
+
+    passed_count = sum(1 for item in checks if item[&quot;passed&quot;])
+    score = round(passed_count / len(checks), 2)
+    passing_score = rules[&quot;passing_score&quot;]
+
+    return {
+        &quot;quality_score&quot;: score,
+        &quot;passing_score&quot;: passing_score,
+        &quot;passed&quot;: score &gt;= passing_score and all(item[&quot;passed&quot;] for item in checks if item[&quot;severity&quot;] == &quot;critical&quot;),
+        &quot;checks&quot;: checks,
+        &quot;failed_checks&quot;: [item for item in checks if not item[&quot;passed&quot;]],
+    }</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>validate_dataset()</h3>
+                <code>backend/validation.py</code>
+              </header>
+              <div><p>هذه الدالة هي gate. لا يجوز أن ينتقل النظام إلى KPIs وrecommendation إذا كانت العلاقات أو القيم الأساسية مكسورة.</p><p>هي تفحص وجود الجداول، صحة trip_id وstop_id، عدم وجود قيم سالبة، عدم تجاوز الحمل لسعة الحافلة، وترتيب المحطات داخل الرحلة.</p><p>القيمة التعليمية هنا أن الطالب يرى الفرق بين خطأ يمنع التحليل critical وبين warning يحتاج توضيحا. ليس كل مشكلة لها نفس الخطورة.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>إذا ظهر stop_event يشير إلى stop_id غير موجود، فإن Stop View في Explorer لا يستطيع تفسير موقع التأخير بشكل موثوق.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 2</div>
+              <pre class="code-block"><code>def check(check_id: str, passed: bool, message: str, severity: str = &quot;critical&quot;) -&gt; dict[str, Any]:
+    return {&quot;id&quot;: check_id, &quot;passed&quot;: bool(passed), &quot;severity&quot;: severity, &quot;message&quot;: message}
+
+
+validation_report = validate_dataset(dataset, validation_rules)
+display(pd.DataFrame(validation_report[&quot;checks&quot;]))
+validation_report</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>check()</h3>
+                <code>backend/validation.py</code>
+              </header>
+              <div><p>هذه helper تجعل كل فحص يرجع بنفس البنية: id وpassed وseverity وmessage. هذا يسهل على الواجهة عرض النتائج بدون معرفة تفاصيل كل فحص.</p><p>وجود شكل ثابت للنتيجة هو API contract مصغر. إذا احترم Backend هذا العقد، تستطيع الواجهة عرض quality checks بوضوح.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>required_tables وnon_negative_time يرجعان نفس الشكل رغم أن منطق الفحص مختلف.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تشرح Quality Gate. في DSS محترم، لا ننتقل من البيانات إلى recommendation مباشرة. يجب أولا أن نسأل: هل البيانات صالحة للتحليل؟</p><p>required_tables يحمي من نقص الجداول. valid_trip_references وvalid_stop_references يحميان العلاقات. non_negative_time يحمي من قيم غير منطقية. capacity_not_exceeded يعطي warning لأن تجاوز السعة قد يكون خطأ أو assumption يحتاج مراجعة.</p><p>النتيجة ليست فقط passed true أو false. الطالب يجب أن يقرأ quality_score وfailed_checks وseverity. الفرق بين critical وwarning مهم: critical يمكن أن يمنع analysis، بينما warning قد يسمح بالتحليل مع توضيح محدودية.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن validation ليس اختبارا بعديا فقط. هو gate داخل المنتج يمنع نتائج غير موثوقة من الوصول إلى المستخدم.</p></article><article><strong>مثال</strong><p>إذا كان stop_id في stop_events غير موجود في stops، فإن أي map أو explorer سيعرض دليلا بلا موقع صحيح.</p></article><article><strong>خطأ شائع</strong><p>الاكتفاء برسالة Data OK. المطلوب معرفة أي check نجح أو فشل، severity، وعدد الصفوف المتأثرة.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Validation report</strong><span>Expected output</span></header>
+      <pre>quality_score: 1.0
+analysis_gate: allowed
+passed_checks: 6
+failed_checks_count: 0
+failed_checks: []</pre>
+      <p>هذه النتيجة تحدد هل التحليل مسموح. عند فشل critical checks يجب أن يتوقف DSS قبل recommendation.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-16">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-2">
+      <header>
+        <span class="week-number">الأسبوع 2</span>
+        <div>
+          <strong>الجودة وKPIs</strong>
+          <small>Week 2 - Quality and metrics</small>
+        </div>
+      </header>
+      <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>Quality Gate يعني أن النظام قد يمنع التحليل إذا كانت البيانات غير صالحة.</li><li>الفرق بين critical issue وwarning، ولماذا لا تتساوى كل مشاكل البيانات.</li><li>KPI الجيد له source table وfields وformula وthreshold وليس مجرد رقم في بطاقة.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل validate_dataset وقراءة passed وquality_score وfailed_checks.</li><li>تشغيل analyze_dataset ومراجعة stop_summary وcause_summary وworst_trips.</li><li>تتبع كل KPI من الواجهة إلى الحقول التي خرج منها في الجداول.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تجربة حالة مرجعية مكسورة أو قيمة سالبة ومعرفة هل يتم إيقاف التحليل.</li><li>مقارنة passed/failed counts قبل قبول النتائج.</li><li>التأكد أن worst_stop لا يأتي من trips فقط بل من stop_events.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li><li>أرفق لقطة أو مخرج يثبت أن التحليل مبني على بيانات اجتازت الفحص.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>8. KPI calculation: كيف يتحول الصف إلى مؤشر؟</h2><p>KPI ليس اسما على بطاقة. هو سؤال تشغيلي يتحول إلى formula. إذا لم نعرف source table وfields وthreshold، يصبح KPI مجرد رقم بلا معنى.</p><p>on_time_rate يعتمد على trips لأن السؤال عن الرحلة كاملة. أما worst_stop فيعتمد على stop_events لأن السؤال عن مكان تراكم التأخير داخل المسار.</p><p>هذه التفرقة مهمة للطلاب: ليس كل مؤشر يحسب من نفس الجدول. اختيار الجدول الصحيح جزء من التفكير البرمجي والتحليلي.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-17">
+      <div class="prompt">In [17]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-2">
+      <header>
+        <span class="week-number">الأسبوع 2</span>
+        <div>
+          <strong>الجودة وKPIs</strong>
+          <small>Week 2 - Quality and metrics</small>
+        </div>
+      </header>
+      <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>Quality Gate يعني أن النظام قد يمنع التحليل إذا كانت البيانات غير صالحة.</li><li>الفرق بين critical issue وwarning، ولماذا لا تتساوى كل مشاكل البيانات.</li><li>KPI الجيد له source table وfields وformula وthreshold وليس مجرد رقم في بطاقة.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل validate_dataset وقراءة passed وquality_score وfailed_checks.</li><li>تشغيل analyze_dataset ومراجعة stop_summary وcause_summary وworst_trips.</li><li>تتبع كل KPI من الواجهة إلى الحقول التي خرج منها في الجداول.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تجربة حالة مرجعية مكسورة أو قيمة سالبة ومعرفة هل يتم إيقاف التحليل.</li><li>مقارنة passed/failed counts قبل قبول النتائج.</li><li>التأكد أن worst_stop لا يأتي من trips فقط بل من stop_events.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li><li>أرفق لقطة أو مخرج يثبت أن التحليل مبني على بيانات اجتازت الفحص.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def records(frame: pd.DataFrame) -&gt; list[dict[str, Any]]:
+    return frame.round(2).to_dict(orient=&quot;records&quot;)</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>records()</h3>
+                <code>backend/analysis.py</code>
+              </header>
+              <div><p>pandas DataFrame ممتاز للتحليل، لكنه ليس شكل الاستجابة الذي تستهلكه React بسهولة. هذه helper تحول الصفوف إلى list of dictionaries.</p><p>round(2) يجعل الأرقام أكثر قراءة في الواجهة. الطالب يرى هنا أن تجهيز البيانات للواجهة جزء من هندسة النظام وليس مجرد تنسيق.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>stop_summary بعد groupby يتحول إلى rows يمكن للواجهة رسمها في ranking أو table.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 2</div>
+              <pre class="code-block"><code>def analyze_dataset(dataset: dict[str, pd.DataFrame], kpi_config: dict[str, Any]) -&gt; dict[str, Any]:
+    trips = dataset[&quot;trips&quot;]
+    events = dataset[&quot;stop_events&quot;]
+    threshold = kpi_config[&quot;on_time_threshold_sec&quot;]
+
+    stop_summary = (
+        events.groupby([&quot;stop_id&quot;, &quot;stop_name&quot;], as_index=False)
+        .agg(
+            avg_added_delay_sec=(&quot;added_delay_sec&quot;, &quot;mean&quot;),
+            avg_dwell_excess_sec=(&quot;dwell_excess_sec&quot;, &quot;mean&quot;),
+            avg_passenger_load=(&quot;passenger_load&quot;, &quot;mean&quot;),
+            peak_events=(&quot;is_peak&quot;, &quot;sum&quot;),
+        )
+        .sort_values(&quot;avg_added_delay_sec&quot;, ascending=False)
+    )
+
+    worst_stop = stop_summary.iloc[0].to_dict()
+    cause_summary = (
+        events.groupby(&quot;delay_cause&quot;, as_index=False)
+        .agg(total_added_delay_sec=(&quot;added_delay_sec&quot;, &quot;sum&quot;), events=(&quot;trip_id&quot;, &quot;count&quot;))
+        .sort_values(&quot;total_added_delay_sec&quot;, ascending=False)
+    )
+
+    return {
+        &quot;kpis&quot;: {
+            &quot;trips_analyzed&quot;: int(len(trips)),
+            &quot;on_time_rate&quot;: round(float((trips[&quot;final_delay_sec&quot;] &lt;= threshold).mean()), 2),
+            &quot;avg_final_delay_sec&quot;: round(float(trips[&quot;final_delay_sec&quot;].mean()), 1),
+            &quot;avg_dwell_time_sec&quot;: round(float(events[&quot;dwell_time_sec&quot;].mean()), 1),
+            &quot;worst_stop&quot;: worst_stop[&quot;stop_name&quot;],
+            &quot;worst_stop_id&quot;: worst_stop[&quot;stop_id&quot;],
+        },
+        &quot;stop_summary&quot;: records(stop_summary),
+        &quot;cause_summary&quot;: records(cause_summary),
+        &quot;trip_summary&quot;: records(trips.sort_values(&quot;final_delay_sec&quot;, ascending=False).head(10)),
+    }
+
+
+analysis = analyze_dataset(dataset, kpi_config)
+analysis[&quot;kpis&quot;]</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>analyze_dataset()</h3>
+                <code>backend/analysis.py</code>
+              </header>
+              <div><p>هذه الدالة هي مركز التحليل. تقرأ trips وstop_events وتحولها إلى مؤشرات ومجاميع مفهومة.</p><p>on_time_rate يعتمد على final_delay_sec في trips. stop_summary يعتمد على stop_events لأننا نريد ترتيب المحطات حسب التأخير المضاف. cause_summary يعتمد على delay_cause لمعرفة السبب الأكثر تأثيرا.</p><p>النتيجة لا تخدم صفحة واحدة فقط. نفس output يستخدم في Dashboard وDelay Evidence وRecommendation. لذلك أي خطأ هنا ينتشر في المنتج كله.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>إذا كان worst_stop هو S03، فهذا لا يعني القرار النهائي، لكنه يحدد أين يبدأ التفتيش وأي scenario يستحق التجربة.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تحول البيانات إلى KPIs. يجب أن يفهم الطالب أن KPI ليس بطاقة جميلة في الواجهة، بل حساب له source table وfields وformula وthreshold وحدود.</p><p>on_time_rate يحسب نسبة الرحلات التي final_delay_sec لديها أقل أو يساوي threshold. avg_final_delay_sec يلخص التأخير النهائي للرحلات. avg_dwell_time_sec يوضح سلوك الوقوف والصعود. worst_stop يحدد أين يظهر التأخير المضاف بشكل أكبر.</p><p>stop_summary يستخدم groupby على stop_id وstop_name. هذا يعني أن التحليل ينتقل من row-level events إلى stop-level ranking. cause_summary يستخدم groupby على delay_cause لمعرفة أي سبب ينتج أكبر مجموع تأخير.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن KPI يبدأ بسؤال ثم source table ثم formula. الرقم في الواجهة هو آخر خطوة وليس أول خطوة.</p></article><article><strong>مثال</strong><p>on_time_rate يستخدم trips لأن السؤال عن الرحلة كاملة، بينما worst_stop يستخدم stop_events لأن السؤال عن محطة داخل الرحلات.</p></article><article><strong>خطأ شائع</strong><p>استخدام stop_events لحساب عدد الرحلات مباشرة. هذا يضاعف العد لأن كل trip تظهر في عدة stops.</p></article></section>
+        
+    <section class="output">
+      <header><strong>KPI result</strong><span>Expected output</span></header>
+      <pre>trips_analyzed: 36
+on_time_rate: 0.28
+avg_final_delay_sec: 1142.1
+avg_dwell_time_sec: 70.4
+worst_stop: Central Hospital
+worst_stop_id: S03</pre>
+      <p>هذه القيم هي مادة Dashboard وExplorer. كل رقم يجب أن يعود إلى جدول وحقل وحساب.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+    <article class="cell code" id="cell-18">
+      <div class="prompt">In [18]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-2">
+      <header>
+        <span class="week-number">الأسبوع 2</span>
+        <div>
+          <strong>الجودة وKPIs</strong>
+          <small>Week 2 - Quality and metrics</small>
+        </div>
+      </header>
+      <p>يتعلم الطالب أن التحليل لا يبدأ قبل فحص البيانات، وأن كل KPI يجب أن يكون قابلا للتتبع إلى جدول وحقل وحساب.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>Quality Gate يعني أن النظام قد يمنع التحليل إذا كانت البيانات غير صالحة.</li><li>الفرق بين critical issue وwarning، ولماذا لا تتساوى كل مشاكل البيانات.</li><li>KPI الجيد له source table وfields وformula وthreshold وليس مجرد رقم في بطاقة.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل validate_dataset وقراءة passed وquality_score وfailed_checks.</li><li>تشغيل analyze_dataset ومراجعة stop_summary وcause_summary وworst_trips.</li><li>تتبع كل KPI من الواجهة إلى الحقول التي خرج منها في الجداول.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تجربة حالة مرجعية مكسورة أو قيمة سالبة ومعرفة هل يتم إيقاف التحليل.</li><li>مقارنة passed/failed counts قبل قبول النتائج.</li><li>التأكد أن worst_stop لا يأتي من trips فقط بل من stop_events.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب ملخص Quality Gate: ماذا فحص؟ ماذا نجح؟ ماذا كان سيمنع التحليل؟</li><li>أضف جدول KPI definitions يذكر source وformula وmeaning لكل مؤشر مهم.</li><li>أرفق لقطة أو مخرج يثبت أن التحليل مبني على بيانات اجتازت الفحص.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>print(&quot;Stop ranking&quot;)
+display(pd.DataFrame(analysis[&quot;stop_summary&quot;]))
+
+print(&quot;Delay cause summary&quot;)
+display(pd.DataFrame(analysis[&quot;cause_summary&quot;]))
+
+print(&quot;Worst trips&quot;)
+display(pd.DataFrame(analysis[&quot;trip_summary&quot;]))</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تعرض مخرجات التحليل كجداول. هذا مهم لأن الطالب يجب أن يرى نفس النتيجة قبل أن تتحول إلى cards أو charts في الواجهة.</p><p>Stop ranking يجيب: أين تتراكم المشكلة؟ Delay cause summary يجيب: ما نوع السبب الأكثر تكلفة؟ Worst trips يجيب: أي رحلات يجب فتحها إذا أردنا فحص أمثلة ملموسة؟</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Analysis tables</strong><span>Expected output</span></header>
+      <pre>Stop ranking: S03 Central Hospital highest average added delay
+Cause summary: boarding highest total added delay
+Worst trips: peak-hour trips appear near the top</pre>
+      <p>هذه الجداول تعرض التحليل من ثلاث زوايا: المحطات، الأسباب، والرحلات الأسوأ.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-19">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-3">
+      <header>
+        <span class="week-number">الأسبوع 3</span>
+        <div>
+          <strong>السيناريو والتوصية</strong>
+          <small>Week 3 - Scenarios and recommendation</small>
+        </div>
+      </header>
+      <p>ينتقل الطالب من وصف المشكلة إلى اختبار بدائل: ماذا يحدث لو غيرنا جزءا محددا من البيانات، وما الدليل وراء التوصية.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>baseline هو الوضع قبل التعديل، ولا يصح تغييره أثناء المقارنة.</li><li>scenario ليس وعدا بأن المدينة ستتحسن فعليا؛ هو تجربة حسابية على افتراض واضح.</li><li>recommendation المحترمة تجمع improvement وconfidence وfeasibility وlimitations.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل run_scenarios ومراجعة جدول المقارنة بين baseline وmodified.</li><li>فتح أفضل scenario ومعرفة target_stop_id وexpected improvement.</li><li>تشغيل build_recommendation وقراءة evidence وlimitations قبل الحكم على النتيجة.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد أن scenario لا يغير baseline الأصلي.</li><li>مقارنة أثر scenario على محطة مستهدفة مقابل باقي المحطات.</li><li>التأكد أن التوصية لا تظهر إذا فشل Quality Gate.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>أضف جدول scenario comparison يوضح التحسن المتوقع لكل بديل.</li><li>اكتب لماذا تم اختيار البديل المقترح، وما القيود التي تمنع اعتباره قرارا نهائيا.</li><li>أرفق evidence من stop_summary أو worst_trips يربط التوصية بمصدرها.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>9. Scenario Lab: تجربة تغيير قبل التوصية</h2><p>Scenario Lab لا يقول ماذا سيحدث فعليا في المدينة. هو يقول: إذا افترضنا تدخلا محددا، كيف يمكن أن تتغير الأرقام داخل dataset؟</p><p>هذا مهم لأن القرار لا يبنى على worst_stop فقط. قد تكون المحطة واضحة، لكن نوع التدخل يحتاج مقارنة. تنظيم الصعود، تعديل الجدولة، أو إضافة حافلة كلها تغير البيانات بطرق مختلفة.</p><p>السيناريو الجيد يترك baseline محفوظا، يغير نسخة من البيانات، يعيد حساب KPIs، ثم يقارن. بدون هذه الخطوات تصبح المقارنة كلاما لا تجربة.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-20">
+      <div class="prompt">In [20]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-3">
+      <header>
+        <span class="week-number">الأسبوع 3</span>
+        <div>
+          <strong>السيناريو والتوصية</strong>
+          <small>Week 3 - Scenarios and recommendation</small>
+        </div>
+      </header>
+      <p>ينتقل الطالب من وصف المشكلة إلى اختبار بدائل: ماذا يحدث لو غيرنا جزءا محددا من البيانات، وما الدليل وراء التوصية.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>baseline هو الوضع قبل التعديل، ولا يصح تغييره أثناء المقارنة.</li><li>scenario ليس وعدا بأن المدينة ستتحسن فعليا؛ هو تجربة حسابية على افتراض واضح.</li><li>recommendation المحترمة تجمع improvement وconfidence وfeasibility وlimitations.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل run_scenarios ومراجعة جدول المقارنة بين baseline وmodified.</li><li>فتح أفضل scenario ومعرفة target_stop_id وexpected improvement.</li><li>تشغيل build_recommendation وقراءة evidence وlimitations قبل الحكم على النتيجة.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد أن scenario لا يغير baseline الأصلي.</li><li>مقارنة أثر scenario على محطة مستهدفة مقابل باقي المحطات.</li><li>التأكد أن التوصية لا تظهر إذا فشل Quality Gate.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>أضف جدول scenario comparison يوضح التحسن المتوقع لكل بديل.</li><li>اكتب لماذا تم اختيار البديل المقترح، وما القيود التي تمنع اعتباره قرارا نهائيا.</li><li>أرفق evidence من stop_summary أو worst_trips يربط التوصية بمصدرها.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def run_scenarios(dataset: dict[str, pd.DataFrame], scenarios_config: dict[str, Any], kpi_config: dict[str, Any]) -&gt; list[dict[str, Any]]:
+    baseline = analyze_dataset(dataset, kpi_config)[&quot;kpis&quot;]
+    results = []
+
+    for scenario in scenarios_config[&quot;scenarios&quot;]:
+        adjusted = apply_scenario(dataset[&quot;stop_events&quot;], scenario)
+        scenario_dataset = {
+            **dataset,
+            &quot;stop_events&quot;: adjusted,
+            &quot;trips&quot;: recalculate_trips(dataset[&quot;trips&quot;], adjusted),
+        }
+        scenario_kpis = analyze_dataset(scenario_dataset, kpi_config)[&quot;kpis&quot;]
+        improvement = baseline[&quot;avg_final_delay_sec&quot;] - scenario_kpis[&quot;avg_final_delay_sec&quot;]
+        confidence = confidence_score(improvement, scenario[&quot;feasibility&quot;], scenario[&quot;cost_factor&quot;])
+        action_score = round((max(improvement, 0) * scenario[&quot;feasibility&quot;] * confidence) / scenario[&quot;cost_factor&quot;], 2)
+
+        results.append({
+            &quot;scenario_id&quot;: scenario[&quot;scenario_id&quot;],
+            &quot;name&quot;: scenario[&quot;name&quot;],
+            &quot;description&quot;: scenario[&quot;description&quot;],
+            &quot;target_stop_id&quot;: scenario[&quot;target_stop_id&quot;],
+            &quot;baseline_avg_delay_sec&quot;: baseline[&quot;avg_final_delay_sec&quot;],
+            &quot;scenario_avg_delay_sec&quot;: scenario_kpis[&quot;avg_final_delay_sec&quot;],
+            &quot;improvement_sec&quot;: round(improvement, 1),
+            &quot;confidence&quot;: confidence,
+            &quot;cost_factor&quot;: scenario[&quot;cost_factor&quot;],
+            &quot;feasibility&quot;: scenario[&quot;feasibility&quot;],
+            &quot;action_score&quot;: action_score,
+        })
+
+    return sorted(results, key=lambda item: item[&quot;action_score&quot;], reverse=True)</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>run_scenarios()</h3>
+                <code>backend/scenarios.py</code>
+              </header>
+              <div><p>هذه الدالة تقارن مجموعة interventions. تبدأ من baseline ثم تطبق كل scenario على نسخة معدلة من البيانات.</p><p>بعد تعديل البيانات، تعيد حساب KPIs. هذا مهم لأن scenario لا يجب أن يغير card في الواجهة فقط؛ يجب أن يغير underlying data ثم يعيد بناء المؤشر.</p><p>ranking يعتمد على improvement وconfidence وfeasibility وcost_factor. هذا يعلم الطالب أن أفضل قرار ليس دائما أكبر تحسن رقمي.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>Additional Bus قد يوفر زمنا أكبر، لكن cost_factor العالي وfeasibility الأقل قد يخفضان action_score.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 2</div>
+              <pre class="code-block"><code>def apply_scenario(events: pd.DataFrame, scenario: dict[str, Any]) -&gt; pd.DataFrame:
+    adjusted = events.copy()
+    float_columns = [&quot;dwell_time_sec&quot;, &quot;dwell_excess_sec&quot;, &quot;added_delay_sec&quot;, &quot;cumulative_delay_sec&quot;]
+    adjusted[float_columns] = adjusted[float_columns].astype(float)
+
+    mask = adjusted[&quot;stop_id&quot;] == scenario[&quot;target_stop_id&quot;]
+    saving = adjusted.loc[mask, &quot;issue_wait_sec&quot;] * scenario[&quot;saving_factor&quot;]
+
+    adjusted.loc[mask, &quot;dwell_time_sec&quot;] = (adjusted.loc[mask, &quot;dwell_time_sec&quot;] - saving).clip(lower=0)
+    adjusted.loc[mask, &quot;dwell_excess_sec&quot;] = (
+        adjusted.loc[mask, &quot;dwell_time_sec&quot;] - adjusted.loc[mask, &quot;expected_dwell_sec&quot;]
+    ).clip(lower=0)
+    adjusted.loc[mask, &quot;added_delay_sec&quot;] = (adjusted.loc[mask, &quot;added_delay_sec&quot;] - saving).clip(lower=0)
+    adjusted[&quot;cumulative_delay_sec&quot;] = adjusted.groupby(&quot;trip_id&quot;)[&quot;added_delay_sec&quot;].cumsum()
+    return adjusted</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>apply_scenario()</h3>
+                <code>backend/scenarios.py</code>
+              </header>
+              <div><p>هذه الدالة هي المكان الذي يتحول فيه scenario من فكرة إلى تعديل بيانات. تستخدم target_stop_id لتحديد الصفوف المتأثرة.</p><p>بعد حساب saving، يتم تقليل dwell_time_sec وadded_delay_sec ثم إعادة cumulative_delay_sec. هذا يمنع ظهور تحسن في محطة واحدة دون أن ينعكس على بقية الرحلة.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>Organized Boarding على S03 يقلل issue_wait_sec في صفوف S03، ثم يتغير final_delay_sec عند نهاية كل trip.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 3</div>
+              <pre class="code-block"><code>def recalculate_trips(trips: pd.DataFrame, events: pd.DataFrame) -&gt; pd.DataFrame:
+    final_delay = events.sort_values(&quot;sequence&quot;).groupby(&quot;trip_id&quot;).tail(1)[[&quot;trip_id&quot;, &quot;cumulative_delay_sec&quot;]]
+    recalculated = trips.drop(columns=[&quot;final_delay_sec&quot;]).merge(final_delay, on=&quot;trip_id&quot;)
+    return recalculated.rename(columns={&quot;cumulative_delay_sec&quot;: &quot;final_delay_sec&quot;})</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>recalculate_trips()</h3>
+                <code>backend/scenarios.py</code>
+              </header>
+              <div><p>بعد تعديل stop_events، جدول trips يصبح قديما إذا لم نحدث final_delay_sec. هذه الدالة تأخذ آخر stop_event في كل trip وتستخدم cumulative_delay_sec كقيمة نهائية.</p><p>هذا يعلّم الطالب أن الجداول المشتقة يجب أن يعاد حسابها بعد أي scenario. لا يكفي تعديل جدول واحد وترك الباقي كما هو.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>إذا انخفض cumulative_delay_sec في S05 بعد scenario، يجب أن ينخفض final_delay_sec في trips.</p></aside>
+            </section>
+            
+            </div>
+            
+            <div class="code-part">
+              <div class="part-title">Code block 4</div>
+              <pre class="code-block"><code>def confidence_score(improvement: float, feasibility: float, cost_factor: float) -&gt; float:
+    if improvement &lt;= 0:
+        return 0.2
+    return round(min(0.95, 0.45 + feasibility * 0.35 + min(improvement / 600, 0.2) - cost_factor * 0.03), 2)
+
+
+scenario_results = run_scenarios(dataset, scenarios_config, kpi_config)
+pd.DataFrame(scenario_results)</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>confidence_score()</h3>
+                <code>backend/scenarios.py</code>
+              </header>
+              <div><p>هذه الدالة ليست نموذج AI حقيقي. هي formula تعليمية تشرح كيف يمكن أن تدخل feasibility وcost_factor وimprovement في إشارة ثقة.</p><p>المهم أن الطالب يفهم أن confidence ليست شعورا. هي قيمة يجب أن تكون مبنية على قواعد أو نموذج أو دليل.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>سيناريو feasible ورخيص وله improvement واضح يحصل على confidence أعلى من سيناريو مكلف وصعب التنفيذ.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تشرح Scenario Lab. السيناريو ليس توقعا مؤكدا وليس توصية نهائية. هو تجربة حسابية تقول: إذا غيرنا جزءا محددا في البيانات، كيف يتغير baseline؟</p><p>run_scenarios يبدأ من baseline KPIs، ثم يطبق كل scenario على نسخة من stop_events. هذا مهم: لا نعدل baseline نفسه، لأن المقارنة ستصبح غير عادلة.</p><p>apply_scenario يقلل delay في target_stop_id بناء على saving_factor. بعدها يتم تحديث cumulative_delay_sec لأن التأخير يتراكم على طول الرحلة. ثم recalculate_trips يعيد بناء final_delay_sec من آخر stop_event في كل trip.</p><p>action_score ليس حقيقة مطلقة. هو ranking تعليمي يجمع improvement وfeasibility وconfidence ويقسم على cost_factor. لذلك قد يكون scenario يحسن كثيرا لكن ترتيبه أقل إذا كان مكلفا أو صعب التنفيذ.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن scenario يجب أن يغير البيانات ثم يعيد الحساب. إذا غيرنا البطاقة في الواجهة فقط، فهذا ليس DSS بل mockup.</p></article><article><strong>مثال</strong><p>Organized Boarding يقلل issue_wait في S03، ثم ينخفض added_delay، ثم يعاد cumulative_delay، ثم يتغير final_delay_sec.</p></article><article><strong>خطأ شائع</strong><p>مقارنة scenario بدون baseline محفوظ. عندها لا نعرف هل التحسن حقيقي أم نتيجة تعديل خاطئ.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Scenario results</strong><span>Expected output</span></header>
+      <pre>Organized Boarding: improvement 148.5s | confidence 0.79 | action_score 88.2
+Ticket Machine: improvement 121.3s | confidence 0.72 | action_score 34.1
+Additional Bus: improvement 176.2s | confidence 0.71 | action_score 26.4</pre>
+      <p>السيناريوهات تقارن baseline مع modified data. النتيجة ليست وعدا بل دليل أولي للتجربة.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-21">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-3">
+      <header>
+        <span class="week-number">الأسبوع 3</span>
+        <div>
+          <strong>السيناريو والتوصية</strong>
+          <small>Week 3 - Scenarios and recommendation</small>
+        </div>
+      </header>
+      <p>ينتقل الطالب من وصف المشكلة إلى اختبار بدائل: ماذا يحدث لو غيرنا جزءا محددا من البيانات، وما الدليل وراء التوصية.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>baseline هو الوضع قبل التعديل، ولا يصح تغييره أثناء المقارنة.</li><li>scenario ليس وعدا بأن المدينة ستتحسن فعليا؛ هو تجربة حسابية على افتراض واضح.</li><li>recommendation المحترمة تجمع improvement وconfidence وfeasibility وlimitations.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل run_scenarios ومراجعة جدول المقارنة بين baseline وmodified.</li><li>فتح أفضل scenario ومعرفة target_stop_id وexpected improvement.</li><li>تشغيل build_recommendation وقراءة evidence وlimitations قبل الحكم على النتيجة.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد أن scenario لا يغير baseline الأصلي.</li><li>مقارنة أثر scenario على محطة مستهدفة مقابل باقي المحطات.</li><li>التأكد أن التوصية لا تظهر إذا فشل Quality Gate.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>أضف جدول scenario comparison يوضح التحسن المتوقع لكل بديل.</li><li>اكتب لماذا تم اختيار البديل المقترح، وما القيود التي تمنع اعتباره قرارا نهائيا.</li><li>أرفق evidence من stop_summary أو worst_trips يربط التوصية بمصدرها.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>10. Recommendation logic: كيف تصبح النتيجة قابلة للمراجعة؟</h2><p>Recommendation ليست جملة مثل نفذوا الحل الفلاني. في النظام الجيد، التوصية هي object يحتوي action وtarget وconfidence وevidence وlimitations وnext_step.</p><p>أول شرط هو السلامة: إذا فشلت Quality Gate لا تظهر recommendation. هذا يحمي المستخدم من قرار يبدو ذكيا لكنه مبني على بيانات غير صالحة.</p><p>بعد ذلك يتم اختيار أفضل scenario بناء على action_score، لكن النتيجة لا تقدم كحقيقة نهائية. هي اقتراح للتجربة والمراجعة مع توضيح القيود.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-22">
+      <div class="prompt">In [22]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-3">
+      <header>
+        <span class="week-number">الأسبوع 3</span>
+        <div>
+          <strong>السيناريو والتوصية</strong>
+          <small>Week 3 - Scenarios and recommendation</small>
+        </div>
+      </header>
+      <p>ينتقل الطالب من وصف المشكلة إلى اختبار بدائل: ماذا يحدث لو غيرنا جزءا محددا من البيانات، وما الدليل وراء التوصية.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>baseline هو الوضع قبل التعديل، ولا يصح تغييره أثناء المقارنة.</li><li>scenario ليس وعدا بأن المدينة ستتحسن فعليا؛ هو تجربة حسابية على افتراض واضح.</li><li>recommendation المحترمة تجمع improvement وconfidence وfeasibility وlimitations.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل run_scenarios ومراجعة جدول المقارنة بين baseline وmodified.</li><li>فتح أفضل scenario ومعرفة target_stop_id وexpected improvement.</li><li>تشغيل build_recommendation وقراءة evidence وlimitations قبل الحكم على النتيجة.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>التأكد أن scenario لا يغير baseline الأصلي.</li><li>مقارنة أثر scenario على محطة مستهدفة مقابل باقي المحطات.</li><li>التأكد أن التوصية لا تظهر إذا فشل Quality Gate.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>أضف جدول scenario comparison يوضح التحسن المتوقع لكل بديل.</li><li>اكتب لماذا تم اختيار البديل المقترح، وما القيود التي تمنع اعتباره قرارا نهائيا.</li><li>أرفق evidence من stop_summary أو worst_trips يربط التوصية بمصدرها.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def generate_recommendation(
+    project: dict[str, Any],
+    decision_card: dict[str, Any],
+    validation_report: dict[str, Any],
+    analysis: dict[str, Any],
+    scenario_results: list[dict[str, Any]],
+) -&gt; dict[str, Any]:
+    if not validation_report[&quot;passed&quot;]:
+        return {
+            &quot;status&quot;: &quot;blocked&quot;,
+            &quot;reason&quot;: decision_card[&quot;safe_failure_message&quot;],
+            &quot;evidence&quot;: {
+                &quot;quality_score&quot;: validation_report[&quot;quality_score&quot;],
+                &quot;failed_checks&quot;: validation_report[&quot;failed_checks&quot;],
+            },
+            &quot;next_step&quot;: &quot;Fix data-quality issues before analysis and recommendation.&quot;,
+        }
+
+    trips_analyzed = analysis[&quot;kpis&quot;][&quot;trips_analyzed&quot;]
+    if trips_analyzed &lt; decision_card[&quot;minimum_trips_for_recommendation&quot;]:
+        return {
+            &quot;status&quot;: &quot;blocked&quot;,
+            &quot;reason&quot;: &quot;Not enough trips to support a recommendation.&quot;,
+            &quot;evidence&quot;: {&quot;trips_analyzed&quot;: trips_analyzed},
+            &quot;next_step&quot;: &quot;Generate more trips or reduce the minimum threshold only with supervisor approval.&quot;,
+        }
+
+    best = scenario_results[0]
+    confidence = best[&quot;confidence&quot;]
+    status = &quot;recommendation_ready&quot; if confidence &gt;= 0.65 else &quot;needs_review&quot;
+
+    return {
+        &quot;status&quot;: status,
+        &quot;project&quot;: project[&quot;project_name&quot;],
+        &quot;decision_question&quot;: decision_card[&quot;decision_question&quot;],
+        &quot;recommended_action&quot;: best[&quot;name&quot;],
+        &quot;target_stop_id&quot;: best[&quot;target_stop_id&quot;],
+        &quot;expected_improvement_sec&quot;: best[&quot;improvement_sec&quot;],
+        &quot;confidence&quot;: confidence,
+        &quot;action_score&quot;: best[&quot;action_score&quot;],
+        &quot;evidence&quot;: {
+            &quot;quality_score&quot;: validation_report[&quot;quality_score&quot;],
+            &quot;worst_stop&quot;: analysis[&quot;kpis&quot;][&quot;worst_stop&quot;],
+            &quot;baseline_avg_delay_sec&quot;: best[&quot;baseline_avg_delay_sec&quot;],
+            &quot;scenario_avg_delay_sec&quot;: best[&quot;scenario_avg_delay_sec&quot;],
+            &quot;scenario_description&quot;: best[&quot;description&quot;],
+        },
+        &quot;limitations&quot;: [
+            &quot;Synthetic training data only.&quot;,
+            &quot;No live AVL feed.&quot;,
+            &quot;Cost and feasibility are simplified for learning.&quot;,
+            &quot;Recommendation should be piloted before operational adoption.&quot;,
+        ],
+        &quot;next_step&quot;: &quot;Run a controlled pilot and compare before/after KPIs.&quot;,
+        &quot;audit_note&quot;: &quot;Recommendation generated from config, synthetic data, validation, analysis, and scenario comparison.&quot;,
+    }
+
+
+recommendation = generate_recommendation(project, decision_card, validation_report, analysis, scenario_results)
+recommendation</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>generate_recommendation()</h3>
+                <code>backend/recommendation.py</code>
+              </header>
+              <div><p>هذه الدالة تجمع كل الرحلة في مخرج واحد. تبدأ بالسؤال الآمن: هل فشلت quality gate؟ إذا نعم، يتم إيقاف التوصية.</p><p>إذا نجحت الجودة، تختار أفضل scenario وتضيف evidence: quality_score وworst_stop وbaseline وscenario result. لذلك يستطيع المستخدم الرجوع من التوصية إلى البيانات التي دعمتها.</p><p>limitations ليست إضافة شكلية. هي جزء من المهنية: Synthetic Data، عدم وجود live feed، وتبسيط التكلفة كلها حدود يجب أن تظهر قبل اتخاذ أي قرار حقيقي.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>recommended_action = Organized Boarding لا تعني التنفيذ الفوري، بل تعني: هذا أفضل تدخل أولي للتجربة والمراجعة بناء على البيانات الحالية.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تبني recommendation. الفرق بين Dashboard وDSS يظهر هنا: Dashboard يعرض مؤشرات، أما DSS فينتج مخرجا قابلا للمراجعة مع evidence وlimitations.</p><p>أول شرط في الدالة هو quality gate. إذا فشلت الجودة، لا توجد توصية. هذا يعلم الطالب أن النظام الآمن يعرف متى يتوقف.</p><p>إذا كانت البيانات كافية والجودة ناجحة، تختار الدالة أفضل scenario وتعيد recommended_action وtarget_stop_id وexpected_improvement_sec وconfidence وaction_score.</p><p>limitations جزء أساسي من المخرج. عندما نقول Synthetic training data أو No live AVL feed فنحن لا نضعف المشروع؛ نحن نجعل التوصية مهنية وقابلة للمراجعة.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن recommendation هي data object وليست عبارة تسويقية. يجب أن تحتوي evidence وconfidence وlimitations.</p></article><article><strong>مثال</strong><p>التوصية تقول Organized Boarding، لكنها تربطها بـ S03 وbaseline وscenario improvement وتذكر أن البيانات synthetic.</p></article><article><strong>خطأ شائع</strong><p>إخفاء القيود حتى تبدو النتيجة أقوى. في الأنظمة المهنية، ذكر القيود يزيد الثقة لأنه يوضح حدود الاستخدام.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Recommendation</strong><span>Expected output</span></header>
+      <pre>status: recommendation_ready
+recommended_action: Organized Boarding
+target_stop_id: S03
+expected_improvement_sec: 148.5
+next_step: Run a controlled pilot and compare before/after KPIs</pre>
+      <p>المخرج النهائي يحتوي التوصية والدليل والقيود. هذا هو الفرق بين chart وبين DSS.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-23">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-4">
+      <header>
+        <span class="week-number">الأسبوع 4</span>
+        <div>
+          <strong>التكامل والتقرير النهائي</strong>
+          <small>Week 4 - Integration and final evidence</small>
+        </div>
+      </header>
+      <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>run_full_pipeline يمثل ترتيب Backend: generate ثم validate ثم analyze ثم scenarios ثم recommendation.</li><li>API لا يخترع النتائج؛ هو يعيد مخرجات pipeline للواجهة بصيغة قابلة للاستخدام.</li><li>التقرير النهائي يحتاج أدلة: screenshots وCSV/JSON outputs واختبارات وشرح حدود النموذج.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل pipeline كاملا مع write_outputs=True لإنتاج ملفات evidence.</li><li>فتح المخرجات النهائية ومقارنتها مع ما يظهر في واجهة DSS.</li><li>تشغيل الاختبارات وربط كل اختبار بجزء من المنطق الذي يحميه.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تشغيل pytest والتأكد أن pipeline وvalidation وAPI contract ما زالت تعمل.</li><li>مقارنة Notebook output مع Backend response ومع واجهة المستخدم.</li><li>التأكد أن التقرير لا يعتمد على Screenshot فقط بل على بيانات قابلة للمراجعة.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li><li>اختم بتوصية مهنية وحدود النموذج والخطوات التالية الممكنة.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>11. Full pipeline: ترتيب التشغيل</h2><p>بعد فهم الدوال منفصلة، نحتاج دالة واحدة تجمع الرحلة. هذا هو دور run_full_pipeline. هي تمنع الفوضى وتجعل Backend يعرف الترتيب الصحيح.</p><p>الترتيب هنا مهم جدا: generate ثم validate ثم analyze ثم scenarios ثم recommendation. إذا اختصر الطالب هذه السلسلة أو غير ترتيبها، سيتغير معنى النظام.</p><p>عند تشغيل pipeline مع write_outputs، يتحول العمل إلى ملفات دليل: CSV وJSON يمكن فتحها وفحصها ومقارنتها مع الواجهة.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-24">
+      <div class="prompt">In [24]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-4">
+      <header>
+        <span class="week-number">الأسبوع 4</span>
+        <div>
+          <strong>التكامل والتقرير النهائي</strong>
+          <small>Week 4 - Integration and final evidence</small>
+        </div>
+      </header>
+      <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>run_full_pipeline يمثل ترتيب Backend: generate ثم validate ثم analyze ثم scenarios ثم recommendation.</li><li>API لا يخترع النتائج؛ هو يعيد مخرجات pipeline للواجهة بصيغة قابلة للاستخدام.</li><li>التقرير النهائي يحتاج أدلة: screenshots وCSV/JSON outputs واختبارات وشرح حدود النموذج.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل pipeline كاملا مع write_outputs=True لإنتاج ملفات evidence.</li><li>فتح المخرجات النهائية ومقارنتها مع ما يظهر في واجهة DSS.</li><li>تشغيل الاختبارات وربط كل اختبار بجزء من المنطق الذي يحميه.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تشغيل pytest والتأكد أن pipeline وvalidation وAPI contract ما زالت تعمل.</li><li>مقارنة Notebook output مع Backend response ومع واجهة المستخدم.</li><li>التأكد أن التقرير لا يعتمد على Screenshot فقط بل على بيانات قابلة للمراجعة.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li><li>اختم بتوصية مهنية وحدود النموذج والخطوات التالية الممكنة.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>def run_full_pipeline(write_outputs: bool = False) -&gt; dict[str, Any]:
+    dataset = generate_dataset(generation_rules)
+    validation_report = validate_dataset(dataset, validation_rules)
+    analysis = analyze_dataset(dataset, kpi_config)
+    scenario_results = run_scenarios(dataset, scenarios_config, kpi_config)
+    recommendation = generate_recommendation(project, decision_card, validation_report, analysis, scenario_results)
+
+    result = {
+        &quot;project&quot;: project,
+        &quot;dataset&quot;: dataset,
+        &quot;validation&quot;: validation_report,
+        &quot;analysis&quot;: analysis,
+        &quot;scenarios&quot;: scenario_results,
+        &quot;recommendation&quot;: recommendation,
+    }
+
+    if write_outputs:
+        output_dir = Path(&quot;notebook_outputs&quot;)
+        output_dir.mkdir(exist_ok=True)
+        for name, frame in dataset.items():
+            frame.to_csv(output_dir / f&quot;{name}.csv&quot;, index=False)
+        (output_dir / &quot;validation_report.json&quot;).write_text(json.dumps(validation_report, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+        (output_dir / &quot;analysis_summary.json&quot;).write_text(json.dumps(analysis, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+        (output_dir / &quot;scenario_results.json&quot;).write_text(json.dumps(scenario_results, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+        (output_dir / &quot;recommendation.json&quot;).write_text(json.dumps(recommendation, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+    return result
+
+
+full_result = run_full_pipeline(write_outputs=False)
+full_result[&quot;recommendation&quot;]</code></pre>
+              
+            <section class="function-note">
+              <header>
+                <span>Function explanation</span>
+                <h3>run_full_pipeline()</h3>
+                <code>backend/pipeline.py</code>
+              </header>
+              <div><p>هذه الدالة تجعل النظام قابلا للتشغيل من نقطة واحدة. بدلا من أن يتذكر الطالب ترتيب كل دالة، pipeline يفرض الترتيب الصحيح.</p><p>هذا الترتيب يحمي المعنى: لا analysis قبل generation، لا recommendation قبل validation، ولا scenario ranking قبل إعادة حساب KPIs.</p><p>عند write_outputs=True، يتحول التشغيل إلى evidence files. هذه الملفات مهمة للتدريب لأنها تثبت أن النتائج جاءت من pipeline وليس من نص مكتوب يدويا.</p></div>
+              <aside><strong>مثال تطبيقي</strong><p>FastAPI endpoints يمكنها استدعاء run_full_pipeline ثم اختيار جزء من النتيجة: data-quality أو kpis أو scenarios أو recommendation.</p></aside>
+            </section>
+            
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تجمع الرحلة في run_full_pipeline. هذه هي طريقة التفكير في Backend: لا نريد أن يضغط المستخدم أزرارا كثيرة لكي يتذكر ترتيب التشغيل.</p><p>الترتيب مهم: generate ثم validate ثم analyze ثم scenarios ثم recommendation. إذا تغير هذا الترتيب قد تظهر recommendation قبل التأكد من جودة البيانات.</p><p>عند write_outputs=True، تكتب الدالة ملفات evidence مثل CSV وJSON. هذه الملفات تساعد الطالب على تقديم دليل ملموس: ليس فقط Screenshot من الواجهة، بل مخرجات بيانات قابلة للفتح والمراجعة.</p>
+        </section>
+        <section class="learning-value"><article><strong>ماذا يتعلم الطالب هنا؟</strong><p>أن pipeline هو ترتيب مسؤول للعمليات. كل مرحلة لها input وoutput، والمرحلة التالية تعتمد عليها.</p></article><article><strong>مثال</strong><p>API /api/kpis لا يحتاج أن يعرف كيف تولدت البيانات خطوة بخطوة؛ يستدعي pipeline ويأخذ analysis.</p></article><article><strong>خطأ شائع</strong><p>تشغيل analysis منفصلا على بيانات قديمة أو غير مفحوصة. pipeline يقلل هذا الخطر.</p></article></section>
+        
+    <section class="output">
+      <header><strong>Pipeline object</strong><span>Expected output</span></header>
+      <pre>result keys:
+project
+dataset
+validation
+analysis
+scenarios
+recommendation
+
+output files:
+routes.csv, stops.csv, trips.csv, stop_events.csv
+validation_report.json, analysis_summary.json, scenario_results.json</pre>
+      <p>الدالة ترجع كل ما تحتاجه API والواجهة، ويمكنها كتابة ملفات evidence عند الحاجة.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-25">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-4">
+      <header>
+        <span class="week-number">الأسبوع 4</span>
+        <div>
+          <strong>التكامل والتقرير النهائي</strong>
+          <small>Week 4 - Integration and final evidence</small>
+        </div>
+      </header>
+      <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>run_full_pipeline يمثل ترتيب Backend: generate ثم validate ثم analyze ثم scenarios ثم recommendation.</li><li>API لا يخترع النتائج؛ هو يعيد مخرجات pipeline للواجهة بصيغة قابلة للاستخدام.</li><li>التقرير النهائي يحتاج أدلة: screenshots وCSV/JSON outputs واختبارات وشرح حدود النموذج.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل pipeline كاملا مع write_outputs=True لإنتاج ملفات evidence.</li><li>فتح المخرجات النهائية ومقارنتها مع ما يظهر في واجهة DSS.</li><li>تشغيل الاختبارات وربط كل اختبار بجزء من المنطق الذي يحميه.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تشغيل pytest والتأكد أن pipeline وvalidation وAPI contract ما زالت تعمل.</li><li>مقارنة Notebook output مع Backend response ومع واجهة المستخدم.</li><li>التأكد أن التقرير لا يعتمد على Screenshot فقط بل على بيانات قابلة للمراجعة.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li><li>اختم بتوصية مهنية وحدود النموذج والخطوات التالية الممكنة.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>12. ماذا يجب أن يفهم الطالب بعد القراءة؟</h2><p>هذه ليست أسئلة اختبار في النقل. هي نقاط فهم تقنية: هل يستطيع الطالب ربط الكود بالبيانات والواجهة؟ هل يعرف أين يعيش كل جزء؟ هل يعرف لماذا يمنع النظام recommendation عند فشل الجودة؟</p><p>إذا استطاع الطالب تتبع stop_events من generator إلى analysis إلى Explorer، فقد فهم العمود الفقري للمشروع. وإذا استطاع شرح كيف يغير scenario البيانات ثم يعيد حساب KPIs، فقد فهم معنى DSS عملي.</p>
+                  </div>
+                </article>
+                
+    <article class="cell code" id="cell-26">
+      <div class="prompt">In [26]</div>
+      <div class="cell-body">
+        
+    <section class="week-panel week-4">
+      <header>
+        <span class="week-number">الأسبوع 4</span>
+        <div>
+          <strong>التكامل والتقرير النهائي</strong>
+          <small>Week 4 - Integration and final evidence</small>
+        </div>
+      </header>
+      <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>run_full_pipeline يمثل ترتيب Backend: generate ثم validate ثم analyze ثم scenarios ثم recommendation.</li><li>API لا يخترع النتائج؛ هو يعيد مخرجات pipeline للواجهة بصيغة قابلة للاستخدام.</li><li>التقرير النهائي يحتاج أدلة: screenshots وCSV/JSON outputs واختبارات وشرح حدود النموذج.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل pipeline كاملا مع write_outputs=True لإنتاج ملفات evidence.</li><li>فتح المخرجات النهائية ومقارنتها مع ما يظهر في واجهة DSS.</li><li>تشغيل الاختبارات وربط كل اختبار بجزء من المنطق الذي يحميه.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تشغيل pytest والتأكد أن pipeline وvalidation وAPI contract ما زالت تعمل.</li><li>مقارنة Notebook output مع Backend response ومع واجهة المستخدم.</li><li>التأكد أن التقرير لا يعتمد على Screenshot فقط بل على بيانات قابلة للمراجعة.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li><li>اختم بتوصية مهنية وحدود النموذج والخطوات التالية الممكنة.</li></ul>
+      </div>
+    </section>
+    
+        
+            <div class="code-part">
+              <div class="part-title">Code block 1</div>
+              <pre class="code-block"><code>summary = {
+    &quot;project&quot;: project[&quot;project_name&quot;],
+    &quot;route&quot;: project[&quot;route_id&quot;],
+    &quot;tables&quot;: {name: len(frame) for name, frame in dataset.items()},
+    &quot;quality_score&quot;: validation_report[&quot;quality_score&quot;],
+    &quot;kpis&quot;: analysis[&quot;kpis&quot;],
+    &quot;best_scenario&quot;: scenario_results[0],
+    &quot;recommendation_status&quot;: recommendation[&quot;status&quot;],
+    &quot;recommended_action&quot;: recommendation.get(&quot;recommended_action&quot;),
+    &quot;next_step&quot;: recommendation.get(&quot;next_step&quot;),
+}
+
+summary</code></pre>
+              
+            </div>
+            
+        <section class="explain">
+          <strong>شرح الخلية</strong>
+          <p>هذه الخلية تصنع summary نهائي. الملخص لا يحل محل التفاصيل، لكنه يساعد على عرض النتيجة بسرعة: ما المشروع؟ كم جدول؟ ما quality_score؟ ما أفضل scenario؟ وما التوصية؟</p><p>هذا النوع من الملخص مفيد في نهاية demo لأن الطالب يستطيع الرجوع منه إلى أي جزء تفصيلي: البيانات، الجودة، التحليل، السيناريو، أو recommendation.</p>
+        </section>
+        
+        
+    <section class="output">
+      <header><strong>Final summary</strong><span>Expected output</span></header>
+      <pre>project: Bus Delay DSS
+route: B12
+quality_score: 1.0
+recommendation_status: recommendation_ready
+recommended_action: Organized Boarding</pre>
+      <p>هذا ملخص مناسب لنهاية تشغيل notebook، لكنه لا يلغي قراءة التفاصيل.</p>
+    </section>
+    
+      </div>
+    </article>
+    
+                <article class="cell markdown" id="cell-27">
+                  <div class="prompt">Markdown</div>
+                  <div class="cell-body">
+                    
+    <section class="week-panel week-4">
+      <header>
+        <span class="week-number">الأسبوع 4</span>
+        <div>
+          <strong>التكامل والتقرير النهائي</strong>
+          <small>Week 4 - Integration and final evidence</small>
+        </div>
+      </header>
+      <p>يجمع الطالب كل الرحلة في pipeline واحد ويربط notebook مع Backend وFrontend وملفات الدليل التي تصلح للتقرير.</p>
+      <div class="week-grid">
+        <article>
+          <b>يعرف</b>
+          <ul><li>run_full_pipeline يمثل ترتيب Backend: generate ثم validate ثم analyze ثم scenarios ثم recommendation.</li><li>API لا يخترع النتائج؛ هو يعيد مخرجات pipeline للواجهة بصيغة قابلة للاستخدام.</li><li>التقرير النهائي يحتاج أدلة: screenshots وCSV/JSON outputs واختبارات وشرح حدود النموذج.</li></ul>
+        </article>
+        <article>
+          <b>ينفذ</b>
+          <ul><li>تشغيل pipeline كاملا مع write_outputs=True لإنتاج ملفات evidence.</li><li>فتح المخرجات النهائية ومقارنتها مع ما يظهر في واجهة DSS.</li><li>تشغيل الاختبارات وربط كل اختبار بجزء من المنطق الذي يحميه.</li></ul>
+        </article>
+        <article>
+          <b>يختبر</b>
+          <ul><li>تشغيل pytest والتأكد أن pipeline وvalidation وAPI contract ما زالت تعمل.</li><li>مقارنة Notebook output مع Backend response ومع واجهة المستخدم.</li><li>التأكد أن التقرير لا يعتمد على Screenshot فقط بل على بيانات قابلة للمراجعة.</li></ul>
+        </article>
+      </div>
+      <div class="report-tasks">
+        <strong>مهام تقرير الطالب</strong>
+        <ul><li>اكتب workflow كامل من config إلى recommendation مع ذكر الملفات أو الصفحات التي تثبت كل خطوة.</li><li>أرفق جدول evidence checklist: مصدر الدليل، أين يظهر، ولماذا يثبت إنجاز المهمة.</li><li>اختم بتوصية مهنية وحدود النموذج والخطوات التالية الممكنة.</li></ul>
+      </div>
+    </section>
+    
+                    <h2>13. ربط Jupyter Notebook بملفات repo</h2><p>Jupyter Notebook هو مسار التعلم. أما repo فهو المنتج المنظم. لذلك يجب أن يعرف الطالب أين ينتقل بعد فهم كل خلية.</p><p>الكود الذي ظهر في notebook يعيش في ملفات Backend مثل generator.py وvalidation.py وanalysis.py وscenarios.py وrecommendation.py وpipeline.py. الواجهة تقرأ هذه النتائج عبر API وتعرضها في صفحات DSS.</p>
+                  </div>
+                </article>
+                </section>
+  <p class="footer">Generated from notebooks/bus_delay_full_journey_expanded.ipynb</p>
+</main>
+</body>
+</html>

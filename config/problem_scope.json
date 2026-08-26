@@ -1,0 +1,28 @@
+{
+  "project_name": "Bus Delay DSS",
+  "route_id": "B12",
+  "route_name": "North Station to Civic Center",
+  "problem_statement": "Repeated bus delays reduce reliability and public trust. The system helps decide which stop, period, and intervention should be reviewed first.",
+  "decision_owner": "Public Transport Operations Manager",
+  "decision_to_support": "Select the first operational intervention to test on route B12 based on delay evidence, scenario impact, confidence, and feasibility.",
+  "scope": {
+    "included": [
+      "Synthetic training data for one bus route",
+      "Stop-level and trip-level delay analysis",
+      "Scenario comparison",
+      "Explainable recommendation"
+    ],
+    "excluded": [
+      "Real passenger personal data",
+      "Live AVL feed",
+      "Procurement decision",
+      "City-wide network optimization"
+    ]
+  },
+  "assumptions": [
+    "Synthetic data is used for training and must be clearly labeled.",
+    "On-time threshold is defined in kpi_config.json.",
+    "Recommendation requires a passing data-quality score."
+  ]
+}
+

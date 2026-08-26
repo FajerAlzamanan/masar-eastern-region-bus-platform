@@ -1,0 +1,12 @@
+{
+  "checks": [
+    {"id": "required_tables", "severity": "critical", "description": "All expected tables exist."},
+    {"id": "valid_trip_references", "severity": "critical", "description": "Every stop event references an existing trip."},
+    {"id": "valid_stop_references", "severity": "critical", "description": "Every stop event references an existing stop."},
+    {"id": "non_negative_time", "severity": "critical", "description": "Time and delay values cannot be negative."},
+    {"id": "capacity_not_exceeded", "severity": "warning", "description": "Passenger load should not exceed bus capacity."},
+    {"id": "ordered_stop_sequence", "severity": "critical", "description": "Stop sequence must increase within each trip."}
+  ],
+  "passing_score": 0.85
+}
+

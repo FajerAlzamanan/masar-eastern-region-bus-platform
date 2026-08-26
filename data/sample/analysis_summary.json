@@ -1,0 +1,141 @@
+{
+  "kpis": {
+    "trips_analyzed": 36,
+    "on_time_rate": 0.89,
+    "avg_final_delay_sec": 198.8,
+    "avg_dwell_time_sec": 64.7,
+    "worst_stop": "Central Hospital",
+    "worst_stop_id": "S03"
+  },
+  "stop_summary": [
+    {
+      "stop_id": "S03",
+      "stop_name": "Central Hospital",
+      "avg_added_delay_sec": 50.94,
+      "avg_dwell_excess_sec": 27.61,
+      "avg_passenger_load": 32.25,
+      "peak_events": 8
+    },
+    {
+      "stop_id": "S04",
+      "stop_name": "University Gate",
+      "avg_added_delay_sec": 46.11,
+      "avg_dwell_excess_sec": 26.57,
+      "avg_passenger_load": 42.14,
+      "peak_events": 8
+    },
+    {
+      "stop_id": "S02",
+      "stop_name": "Market Street",
+      "avg_added_delay_sec": 40.25,
+      "avg_dwell_excess_sec": 17.46,
+      "avg_passenger_load": 15.61,
+      "peak_events": 8
+    },
+    {
+      "stop_id": "S01",
+      "stop_name": "North Station",
+      "avg_added_delay_sec": 31.53,
+      "avg_dwell_excess_sec": 11.39,
+      "avg_passenger_load": 5.83,
+      "peak_events": 8
+    },
+    {
+      "stop_id": "S05",
+      "stop_name": "Civic Center",
+      "avg_added_delay_sec": 29.94,
+      "avg_dwell_excess_sec": 12.46,
+      "avg_passenger_load": 43.33,
+      "peak_events": 8
+    }
+  ],
+  "cause_summary": [
+    {
+      "delay_cause": "boarding",
+      "total_added_delay_sec": 2962,
+      "events": 68
+    },
+    {
+      "delay_cause": "schedule_gap",
+      "total_added_delay_sec": 2893,
+      "events": 84
+    },
+    {
+      "delay_cause": "traffic",
+      "total_added_delay_sec": 1301,
+      "events": 28
+    }
+  ],
+  "trip_summary": [
+    {
+      "trip_id": "T001",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T07:00",
+      "is_peak": true,
+      "final_delay_sec": 362
+    },
+    {
+      "trip_id": "T008",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T08:45",
+      "is_peak": true,
+      "final_delay_sec": 361
+    },
+    {
+      "trip_id": "T004",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T07:45",
+      "is_peak": true,
+      "final_delay_sec": 344
+    },
+    {
+      "trip_id": "T006",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T08:15",
+      "is_peak": true,
+      "final_delay_sec": 310
+    },
+    {
+      "trip_id": "T005",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T08:00",
+      "is_peak": true,
+      "final_delay_sec": 298
+    },
+    {
+      "trip_id": "T007",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T08:30",
+      "is_peak": true,
+      "final_delay_sec": 291
+    },
+    {
+      "trip_id": "T003",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T07:30",
+      "is_peak": true,
+      "final_delay_sec": 287
+    },
+    {
+      "trip_id": "T002",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T07:15",
+      "is_peak": true,
+      "final_delay_sec": 283
+    },
+    {
+      "trip_id": "T015",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T10:30",
+      "is_peak": false,
+      "final_delay_sec": 273
+    },
+    {
+      "trip_id": "T024",
+      "route_id": "B12",
+      "departure_time": "2026-08-03T12:45",
+      "is_peak": false,
+      "final_delay_sec": 236
+    }
+  ]
+}

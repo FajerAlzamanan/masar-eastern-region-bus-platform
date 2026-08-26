@@ -1,0 +1,25 @@
+{
+  "status": "recommendation_ready",
+  "project": "Bus Delay DSS",
+  "decision_question": "Which operational intervention should be tested first, and why?",
+  "recommended_action": "Organized Boarding",
+  "target_stop_id": "S03",
+  "expected_improvement_sec": 15.4,
+  "confidence": 0.75,
+  "action_score": 8.66,
+  "evidence": {
+    "quality_score": 1.0,
+    "worst_stop": "Central Hospital",
+    "baseline_avg_delay_sec": 198.8,
+    "scenario_avg_delay_sec": 183.4,
+    "scenario_description": "Staff organize boarding at the most delayed stop."
+  },
+  "limitations": [
+    "Synthetic training data only.",
+    "No live AVL feed.",
+    "Cost and feasibility are simplified for learning.",
+    "Recommendation should be piloted before operational adoption."
+  ],
+  "next_step": "Run a controlled pilot and compare before/after KPIs.",
+  "audit_note": "Recommendation generated from config, synthetic data, validation, analysis, and scenario comparison."
+}

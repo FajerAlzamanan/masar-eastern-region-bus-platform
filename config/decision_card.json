@@ -1,0 +1,17 @@
+{
+  "decision_id": "DSS-B12-001",
+  "decision_title": "First intervention to reduce repeated delay on route B12",
+  "decision_question": "Which operational intervention should be tested first, and why?",
+  "minimum_quality_score": 0.85,
+  "minimum_trips_for_recommendation": 10,
+  "evidence_required": [
+    "Data quality score",
+    "Worst stop ranking",
+    "Baseline KPIs",
+    "Scenario comparison",
+    "Recommendation confidence",
+    "Limitations"
+  ],
+  "safe_failure_message": "Recommendation is blocked until the dataset quality and evidence thresholds pass."
+}
+

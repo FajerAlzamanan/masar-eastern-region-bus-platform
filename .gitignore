@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+dist/
+*.pyc
+data/generated/*.csv
+data/outputs/*.json
+data/masar_bookings.sqlite3
+!data/generated/.gitkeep
+!data/outputs/.gitkeep

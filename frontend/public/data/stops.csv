@@ -1,0 +1,6 @@
+stop_id,route_id,stop_name,sequence,base_boarding
+S01,B12,North Station,1,8
+S02,B12,Market Street,2,14
+S03,B12,Central Hospital,3,22
+S04,B12,University Gate,4,18
+S05,B12,Civic Center,5,10

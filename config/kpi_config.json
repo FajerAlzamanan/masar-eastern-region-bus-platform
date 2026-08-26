@@ -1,0 +1,33 @@
+{
+  "on_time_threshold_sec": 300,
+  "dwell_excess_threshold_sec": 45,
+  "high_load_ratio": 0.85,
+  "kpis": [
+    {
+      "id": "trips_analyzed",
+      "label": "Trips Analyzed",
+      "definition": "Number of generated trips included in the analysis."
+    },
+    {
+      "id": "on_time_rate",
+      "label": "On-Time Rate",
+      "definition": "Share of trips with final delay less than or equal to the threshold."
+    },
+    {
+      "id": "avg_final_delay_sec",
+      "label": "Average Final Delay",
+      "definition": "Average delay at the final stop, in seconds."
+    },
+    {
+      "id": "avg_dwell_time_sec",
+      "label": "Average Dwell Time",
+      "definition": "Average time spent at stops, in seconds."
+    },
+    {
+      "id": "worst_stop",
+      "label": "Worst Stop",
+      "definition": "Stop with the highest average added delay."
+    }
+  ]
+}
+

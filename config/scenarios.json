@@ -1,0 +1,41 @@
+{
+  "scenarios": [
+    {
+      "scenario_id": "SC01",
+      "name": "Organized Boarding",
+      "target_stop_id": "S03",
+      "description": "Staff organize boarding at the most delayed stop.",
+      "saving_factor": 0.55,
+      "cost_factor": 1.2,
+      "feasibility": 0.9
+    },
+    {
+      "scenario_id": "SC02",
+      "name": "Ticket Machine",
+      "target_stop_id": "S03",
+      "description": "Add ticket machine to reduce boarding delay.",
+      "saving_factor": 0.45,
+      "cost_factor": 1.8,
+      "feasibility": 0.7
+    },
+    {
+      "scenario_id": "SC03",
+      "name": "Additional Bus",
+      "target_stop_id": "S03",
+      "description": "Add an extra bus during peak periods.",
+      "saving_factor": 0.65,
+      "cost_factor": 2.6,
+      "feasibility": 0.55
+    },
+    {
+      "scenario_id": "SC04",
+      "name": "Schedule Adjustment",
+      "target_stop_id": "S02",
+      "description": "Adjust headway before the busiest segment.",
+      "saving_factor": 0.35,
+      "cost_factor": 1.0,
+      "feasibility": 0.8
+    }
+  ]
+}
+

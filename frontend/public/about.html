@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عن مسار</title>
+  <style>
+    :root { --green:#006b5b; --dark:#173038; --muted:#637b81; --line:#dbe6e4; --bg:#f4f8f7; --mint:#e8f4f1; }
+    * { box-sizing:border-box; } body { margin:0; font-family:Arial, Tahoma, sans-serif; color:var(--dark); background:var(--bg); }
+    header { height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 max(20px, calc((100vw - 1120px)/2)); background:#fff; border-bottom:1px solid var(--line); }
+    .brand { display:flex; gap:9px; align-items:center; color:var(--green); font-weight:bold; font-size:22px; }.mark { width:34px; height:34px; border-radius:6px; display:grid; place-items:center; background:var(--mint); }
+    a { text-decoration:none; color:var(--green); font-size:13px; } main { max-width:1040px; margin:auto; padding:56px 24px; }.eyebrow { color:var(--green); font-size:11px; font-weight:bold; letter-spacing:.1em; }
+    h1 { font-size:38px; margin:10px 0; } h2 { font-size:19px; margin:0 0 9px; } .lead { color:var(--muted); font-size:16px; line-height:1.9; max-width:690px; }
+    .hero { background:#fff; border:1px solid var(--line); border-radius:8px; padding:35px; display:grid; grid-template-columns:1.1fr .9fr; gap:30px; align-items:center; }
+    .route { background:var(--mint); min-height:210px; border-radius:7px; padding:25px; display:flex; flex-direction:column; justify-content:center; gap:17px; }.route b { color:var(--green); font-size:20px; }.line { height:5px; background:var(--green); border-radius:9px; position:relative; }.line span { position:absolute; width:13px; height:13px; border:3px solid var(--green); background:white; border-radius:50%; top:50%; transform:translateY(-50%); }.line span:nth-child(1){right:0}.line span:nth-child(2){right:25%}.line span:nth-child(3){right:50%}.line span:nth-child(4){right:75%}.line span:nth-child(5){right:100%}
+    section { margin-top:27px; }.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }.card { background:#fff; border:1px solid var(--line); border-radius:7px; padding:20px; }.card p, .card li { color:var(--muted); font-size:13px; line-height:1.8; }.step { counter-reset:item; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }.step div { background:#fff; border:1px solid var(--line); padding:18px; border-radius:7px; }.step b { display:block; color:var(--green); font-size:25px; }.step span { font-size:13px; display:block; margin-top:8px; }.band { background:var(--green); color:white; border-radius:8px; padding:28px; display:flex; justify-content:space-between; align-items:center; gap:15px; }.band p { color:#d7ece7; font-size:13px; line-height:1.8; max-width:650px; }.band a { color:var(--green); background:#fff; padding:10px 14px; border-radius:5px; white-space:nowrap; }
+    @media(max-width:720px){ .hero,.grid,.step{grid-template-columns:1fr;} h1{font-size:30px}.band{align-items:flex-start;flex-direction:column;} main{padding:32px 15px;} }
+  </style>
+</head>
+<body>
+  <header><div class="brand"><span class="mark">↗</span>مسار</div><a href="/">العودة إلى المنصة</a></header>
+  <main>
+    <div class="hero">
+      <div><span class="eyebrow">عن منصة مسار</span><h1>تنقل حضري متصل، واضح، ومتاح للجميع.</h1><p class="lead">مسار منصة محلية لخدمة ركاب النقل العام وفرق التشغيل. تحول طلب الصعود من عملية منفصلة إلى خدمة موحدة تصل للسائق والمحطة ومركز التشغيل في الوقت نفسه.</p></div>
+      <div class="route"><span>الخط التجريبي</span><b>B12 · المحطة الشمالية إلى المركز المدني</b><div class="line"><span></span><span></span><span></span><span></span><span></span></div><small>5 محطات · بيانات رحلات وتوقفات مرتبطة بالخدمة</small></div>
+    </div>
+    <section><span class="eyebrow">الفكرة</span><h2>ما الذي يحله مسار؟</h2><div class="grid"><article class="card"><h2>للراكب</h2><p>طلب صعود واضح مع محطة ووجهة ووقت وصول محسوب، وخيار طلب المساعدة عند الصعود.</p></article><article class="card"><h2>للسائق</h2><p>قائمة طلبات مباشرة قبل المحطات المقبلة، مع قرار قبول أو اعتذار أو تأكيد الصعود.</p></article><article class="card"><h2>للتشغيل</h2><p>رؤية موحدة لحالة الخط والطلب والحمولة وأسباب التأخير لاتخاذ قرار مبكر.</p></article></div></section>
+    <section><span class="eyebrow">سير الخدمة</span><h2>من طلب الراكب إلى قرار السائق</h2><div class="step"><div><b>01</b><span>يسجل الراكب الدخول ويحدد محطته ووجهته وطريقة الدفع.</span></div><div><b>02</b><span>تتحقق الخدمة من اتجاه الرحلة وعدد الركاب والمحطات المتاحة.</span></div><div><b>03</b><span>يحفظ الطلب في قاعدة بيانات مسار ويظهر في قائمة السائق.</span></div><div><b>04</b><span>يتخذ السائق القرار، وتظهر الحالة المحدّثة للراكب.</span></div></div></section>
+    <section><span class="eyebrow">الضوابط</span><h2>بيانات واضحة وخدمة مسؤولة</h2><div class="grid"><article class="card"><h2>البيانات التشغيلية</h2><p>تعتمد واجهة الخط على بيانات الرحلات والمحطات وفعاليات التوقف الموجودة في المشروع، وليست تقديرات عشوائية.</p></article><article class="card"><h2>الخصوصية والدفع</h2><p>تُحفظ طريقة الدفع المختارة مع الطلب، ولا تُخزن بيانات البطاقة داخل المنصة.</p></article><article class="card"><h2>الإتاحة</h2><p>يصل طلب المساعدة أو أولوية الصعود إلى قائمة السائق كي يكون جزءًا من قرار الرحلة.</p></article></div></section>
+    <section class="band"><div><h2>جاهزية الإنتاج</h2><p>يعمل الإصدار المحلي بقاعدة بيانات SQLite وواجهة FastAPI. النشر العام يتطلب الربط المعتمد مع النفاذ الوطني، تشفير الاتصالات، قاعدة بيانات مدارة، صلاحيات مبنية على الهوية، ومراقبة تشغيلية مستمرة.</p></div><a href="/">فتح مسار</a></section>
+  </main>
+</body>
+</html>

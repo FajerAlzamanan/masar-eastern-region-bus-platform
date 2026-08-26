@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Bus Delay DSS repo map</title>
+  <desc id="desc">A bilingual map explaining the repository folders and how the frontend talks to the backend API.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef8fb"/>
+      <stop offset="1" stop-color="#f8fcff"/>
+    </linearGradient>
+    <linearGradient id="frontend" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e4f7ff"/>
+      <stop offset="1" stop-color="#f7fdff"/>
+    </linearGradient>
+    <linearGradient id="backend" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9fff4"/>
+      <stop offset="1" stop-color="#fbfffd"/>
+    </linearGradient>
+    <linearGradient id="data" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff5df"/>
+      <stop offset="1" stop-color="#fffdf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#0b2940" flood-opacity=".13"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#087da8"/>
+    </marker>
+    <style>
+      .font { font-family: Tajawal, Arial, sans-serif; }
+      .title { font-size: 54px; font-weight: 900; fill: #102033; }
+      .sub { font-size: 23px; font-weight: 600; fill: #53677d; }
+      .section-title { font-size: 30px; font-weight: 900; fill: #102033; }
+      .label { font-size: 22px; font-weight: 900; fill: #102033; }
+      .small { font-size: 18px; font-weight: 700; fill: #53677d; }
+      .tiny { font-size: 15px; font-weight: 800; fill: #53677d; }
+      .code { font-family: Consolas, Monaco, monospace; font-size: 18px; font-weight: 800; fill: #0f2b42; }
+      .pill { font-size: 16px; font-weight: 900; fill: #087da8; }
+      .box { fill: white; stroke: #cfe0eb; stroke-width: 2; rx: 28; filter: url(#shadow); }
+      .mini { fill: white; stroke: #cfe0eb; stroke-width: 2; rx: 18; }
+      .blue { fill: url(#frontend); stroke: #8ed8ed; }
+      .green { fill: url(#backend); stroke: #9fe2c2; }
+      .amber { fill: url(#data); stroke: #ffd486; }
+      .dark { fill: #10212f; }
+      .line { stroke: #087da8; stroke-width: 5; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+      .softline { stroke: #9db5c7; stroke-width: 3; fill: none; stroke-dasharray: 8 9; marker-end: url(#arrow); }
+      .icon { fill: #087da8; opacity: .95; }
+      .badge { fill: #e8f6fb; stroke: #b8dae8; stroke-width: 1.5; rx: 16; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="980" fill="url(#bg)"/>
+
+  <g class="font" direction="rtl">
+    <text x="1510" y="80" text-anchor="end" class="title">كيف يعمل Bus Delay DSS repo؟</text>
+    <text x="1510" y="120" text-anchor="end" class="sub">خريطة واحدة توضح مكان الطالب داخل الملفات، وكيف تتحول البيانات إلى API ثم إلى واجهة قرار.</text>
+  </g>
+
+  <g class="font">
+    <rect x="70" y="160" width="1460" height="190" class="box"/>
+    <text x="1490" y="210" text-anchor="end" class="section-title" direction="rtl">١. هيكل repo الذي سيعمل عليه الطالب</text>
+    <text x="1490" y="242" text-anchor="end" class="small" direction="rtl">كل مجلد له دور واضح في رحلة المنتج. لا يبدأ الطالب من الشاشة فقط؛ بل يربط الشاشة بالملف والـAPI والبيانات.</text>
+
+    <g transform="translate(100 275)">
+      <g>
+        <rect width="148" height="58" class="mini blue"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">frontend</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">React UI</text>
+      </g>
+      <g transform="translate(168 0)">
+        <rect width="148" height="58" class="mini green"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">backend</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">FastAPI + logic</text>
+      </g>
+      <g transform="translate(336 0)">
+        <rect width="148" height="58" class="mini amber"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">config</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">rules</text>
+      </g>
+      <g transform="translate(504 0)">
+        <rect width="148" height="58" class="mini amber"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">data</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">CSV / JSON</text>
+      </g>
+      <g transform="translate(672 0)">
+        <rect width="148" height="58" class="mini"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">notebooks</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">Jupyter</text>
+      </g>
+      <g transform="translate(840 0)">
+        <rect width="148" height="58" class="mini"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">tests</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">pytest</text>
+      </g>
+      <g transform="translate(1008 0)">
+        <rect width="148" height="58" class="mini"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">docs</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">guides</text>
+      </g>
+      <g transform="translate(1176 0)">
+        <rect width="148" height="58" class="mini"/>
+        <path d="M19 24 h32 l8 8 h70 v22 h-110 z" class="icon"/>
+        <text x="84" y="22" text-anchor="middle" class="code">presentation</text>
+        <text x="84" y="45" text-anchor="middle" class="tiny">evidence</text>
+      </g>
+    </g>
+  </g>
+
+  <g class="font">
+    <rect x="70" y="390" width="440" height="360" class="box amber"/>
+    <text x="470" y="440" text-anchor="end" class="section-title" direction="rtl">٢. القواعد والبيانات</text>
+    <text x="470" y="475" text-anchor="end" class="small" direction="rtl">هنا يبدأ النظام: إعدادات قابلة للتعديل، ثم ملفات بيانات يمكن فحصها.</text>
+    <rect x="115" y="515" width="350" height="46" class="mini"/>
+    <text x="445" y="545" text-anchor="end" class="code">config/generation_rules.json</text>
+    <rect x="115" y="575" width="350" height="46" class="mini"/>
+    <text x="445" y="605" text-anchor="end" class="code">config/kpi_config.json</text>
+    <rect x="115" y="635" width="350" height="46" class="mini"/>
+    <text x="445" y="665" text-anchor="end" class="code">data/sample/*.csv</text>
+    <text x="470" y="715" text-anchor="end" class="small" direction="rtl">الطالب يرى كيف تؤثر القواعد على الرحلات، المحطات، التأخير، ونتائج السيناريو.</text>
+
+    <rect x="580" y="390" width="440" height="360" class="box green"/>
+    <text x="980" y="440" text-anchor="end" class="section-title" direction="rtl">٣. Backend والـAPI</text>
+    <text x="980" y="475" text-anchor="end" class="small" direction="rtl">Python يحسب النتائج، وFastAPI يرسلها للواجهة بشكل JSON.</text>
+    <rect x="625" y="515" width="350" height="46" class="mini"/>
+    <text x="955" y="545" text-anchor="end" class="code">backend/main.py</text>
+    <rect x="625" y="575" width="350" height="46" class="mini"/>
+    <text x="955" y="605" text-anchor="end" class="code">/api/kpis</text>
+    <rect x="625" y="635" width="350" height="46" class="mini"/>
+    <text x="955" y="665" text-anchor="end" class="code">/api/scenarios</text>
+    <text x="980" y="715" text-anchor="end" class="small" direction="rtl">كل صفحة في الواجهة يجب أن يعرف الطالب أي endpoint يغذيها.</text>
+
+    <rect x="1090" y="390" width="440" height="360" class="box blue"/>
+    <text x="1490" y="440" text-anchor="end" class="section-title" direction="rtl">٤. Frontend وصفحات التعلم</text>
+    <text x="1490" y="475" text-anchor="end" class="small" direction="rtl">React يعرض المنتج ويكشف للطالب من أين جاءت الأرقام.</text>
+    <rect x="1135" y="515" width="350" height="46" class="mini"/>
+    <text x="1465" y="545" text-anchor="end" class="code">Data Quality Gate</text>
+    <rect x="1135" y="575" width="350" height="46" class="mini"/>
+    <text x="1465" y="605" text-anchor="end" class="code">Delay Evidence</text>
+    <rect x="1135" y="635" width="350" height="46" class="mini"/>
+    <text x="1465" y="665" text-anchor="end" class="code">Scenario Lab</text>
+    <text x="1490" y="715" text-anchor="end" class="small" direction="rtl">الهدف ليس مشاهدة Dashboard فقط، بل تتبع الدليل من الجدول إلى القرار.</text>
+  </g>
+
+  <path d="M510 570 C545 570 545 570 580 570" class="line"/>
+  <path d="M1020 570 C1055 570 1055 570 1090 570" class="line"/>
+  <path d="M800 750 C800 835 300 835 300 755" class="softline"/>
+  <text x="800" y="820" text-anchor="middle" class="font pill">tests verify the pipeline before students trust the screen</text>
+
+  <g class="font">
+    <rect x="70" y="790" width="1460" height="120" class="box"/>
+    <text x="1490" y="838" text-anchor="end" class="section-title" direction="rtl">الرحلة المختصرة</text>
+    <text x="1490" y="875" text-anchor="end" class="label" direction="rtl">Config → Python Backend → API Response → React UI → Evidence Screenshot → Report</text>
+    <text x="1490" y="902" text-anchor="end" class="small" direction="rtl">إذا تغيّر رقم في الشاشة، يجب أن يستطيع الطالب تتبعه إلى قاعدة أو جدول أو دالة أو endpoint.</text>
+  </g>
+</svg>
